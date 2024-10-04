@@ -27,6 +27,6 @@ public class Player_Move : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         //“ü—Í‚³‚ê‚½’è‹`‚³‚ê‚½À•W‚ÉˆÚ“®
-        transform.Translate(new Vector3(horizontakInput,0,verticalInput) * m_MoveSpeed * Time.deltaTime)
+        transform.Translate(new Vector3(horizontakInput, 0, verticalInput) * m_MoveSpeed * Time.deltaTime);
     }
 }
