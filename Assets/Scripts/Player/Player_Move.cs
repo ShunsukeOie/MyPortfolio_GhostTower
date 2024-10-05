@@ -32,10 +32,16 @@ public class Player_Move : MonoBehaviour
         //左スティックの入力から定義された座標に移動
         transform.localPosition += new Vector3(horizontakInput, 0, verticalInput) * m_MoveSpeed * Time.deltaTime;
 
-        //右スティックの水平入力軸の値を取得する
-        float horizontak2Input = Input.GetAxis("Horizontal2");
 
-        //右スティックでプレイヤーを回転
-        transform.Rotate(new Vector3(0, m_RotationSpeed * horizontak2Input,0));
+        //右スティックが入力されている時のみ処理
+        if(Input.GetAxis("Horizontal2") != 0)
+        {
+            //右スティックの水平入力軸の値を取得する
+            float horizontak2Input = Input.GetAxis("Horizontal2");
+
+            //右スティックでプレイヤーを回転
+            transform.Rotate(new Vector3(0, m_RotationSpeed * horizontak2Input, 0));
+        }
+        
     }
 }
