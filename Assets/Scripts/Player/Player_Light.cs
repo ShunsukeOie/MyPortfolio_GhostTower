@@ -6,26 +6,29 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class Player_Light : MonoBehaviour
 {
+    // ライトオブジェクト
     [SerializeField, Header("ライトオブジェクト")]
-    private GameObject LightObj;
+    private GameObject m_LightObj;
 
     // ライトが点灯しているか判定するフラグ
     private bool m_isLighting;
 
-    private float FlashCoolTimer;
-    private float FlashCoolTime;
-
+    // フラッシュのインターバル用の変数
+    [SerializeField]
+    private float m_UseFlashInterval;
+    private float m_FlashCoolTimer;
+    
     // ライトのスクリプトを格納する変数
     Light m_lightscript;
 
     void Start()
     {
         // スクリプトを取得する
-        m_lightscript = LightObj.GetComponent<Light>();
+        m_lightscript = m_LightObj.GetComponent<Light>();
         // フラグを初期化
         m_isLighting = false;
         // ライトオブジェクトを非アクティブにしておく
-        LightObj.SetActive(false);
+        m_LightObj.SetActive(false);
     }
 
     void Update()
@@ -33,14 +36,8 @@ public class Player_Light : MonoBehaviour
         // ライトを点灯する
         LightUp();
 
-        if (Input.GetButtonDown("Flash") && m_isLighting)
-        { 
-           // 光量を上げる
-            m_lightscript.intensity = 10f;
-
-            // 光量を下げていくコルーチンスタート
-            StartCoroutine(Downintensity());
-        }
+        // フラッシュする
+        Flash();
     }
 
     // ライトを点灯させる関数
@@ -52,7 +49,7 @@ public class Player_Light : MonoBehaviour
             // 点灯しているかのフラグを上げる
             m_isLighting = true;
             // ライトオブジェクトをアクティブにする
-            LightObj.SetActive(true);
+            m_LightObj.SetActive(true);
         }
 
         // ライトが点灯していたら処理する
@@ -61,7 +58,30 @@ public class Player_Light : MonoBehaviour
             // 点灯しているかのフラグを下げる
             m_isLighting = false;
             // ライトオブジェクトを非アクティブにする
-            LightObj.SetActive(false);
+            m_LightObj.SetActive(false);
+        }
+    }
+
+    // フラッシュ用関数
+    void Flash()
+    {
+        // 入力制限用
+        if (m_FlashCoolTimer >= 0.0f)
+        {
+            m_FlashCoolTimer -= Time.deltaTime;
+        }
+
+        // ボタンが押されたかつライトが付いているかつタイマーが0以下の場合処理する
+        if (Input.GetButtonDown("Flash") && m_isLighting && m_FlashCoolTimer <= 0.0f)
+        {
+            // 光量を上げる
+            m_lightscript.intensity = 10f;
+
+            // 光量を下げていくコルーチンスタート
+            StartCoroutine(Downintensity());
+
+            // タイマーをリセットする
+            m_FlashCoolTimer = m_UseFlashInterval;
         }
     }
 
