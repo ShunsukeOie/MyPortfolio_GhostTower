@@ -91,7 +91,7 @@ public class Player_Light : MonoBehaviour
         // ループ回数(値を増やすと滑らかになる)
         int loopcount = 50;
         // 下がりきるまでにかかる時間
-        float downtime = 1.0f;        
+        float downtime = 0.7f;        
         // ウェイト時間算出
         float waittime = downtime / loopcount;
 
