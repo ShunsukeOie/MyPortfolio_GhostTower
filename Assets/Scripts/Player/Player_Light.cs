@@ -21,6 +21,13 @@ public class Player_Light : MonoBehaviour
     // ライトのスクリプトを格納する変数
     Light m_lightscript;
 
+    //バッテリー用
+    private float m_maxBattery = 100;     //最大電力
+    private float m_currentBattery = 100; //現在の電力
+
+    //ゲージ操作クラスの取得
+    [SerializeField] private GaugeController m_gaugeController;
+
     void Start()
     {
         // スクリプトを取得する
@@ -29,27 +36,49 @@ public class Player_Light : MonoBehaviour
         m_isLighting = false;
         // ライトオブジェクトを非アクティブにしておく
         m_LightObj.SetActive(false);
+
+        //ゲージを初期値で更新
+        m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
     }
 
     void Update()
     {
+
+        //　バッテリーが0になったらライトを消す
+        if(m_currentBattery <= 0)
+        {
+            // ライトオブジェクトを非アクティブにする
+            m_LightObj.SetActive(false);
+        }
+
         // ライトを点灯する
         LightUp();
+        
+        // バッテリーの残量が10以上ならフラッシュする
+        if(m_currentBattery >= 10)
+        {
+            Flash();
+        }
+        
 
-        // フラッシュする
-        Flash();
+        if(m_isLighting == true)
+        {
+            BatteryDecrease();
+        }
     }
 
     // ライトを点灯させる関数
     void LightUp()
     {
+
         // ライトが点灯していなかったら処理する
-        if (Input.GetButtonDown("Light") && !m_isLighting)
+        if (Input.GetButtonDown("Light") && !m_isLighting && m_currentBattery > 0)
         {
             // 点灯しているかのフラグを上げる
             m_isLighting = true;
             // ライトオブジェクトをアクティブにする
             m_LightObj.SetActive(true);
+
         }
 
         // ライトが点灯していたら処理する
@@ -59,6 +88,7 @@ public class Player_Light : MonoBehaviour
             m_isLighting = false;
             // ライトオブジェクトを非アクティブにする
             m_LightObj.SetActive(false);
+
         }
     }
 
@@ -72,7 +102,7 @@ public class Player_Light : MonoBehaviour
         }
 
         // ボタンが押されたかつライトが付いているかつタイマーが0以下の場合処理する
-        if (Input.GetButtonDown("Flash") && m_isLighting && m_FlashCoolTimer <= 0.0f)
+        if (Input.GetButtonDown("Flash") && m_isLighting && m_FlashCoolTimer <= 0.0f && m_currentBattery > 0)
         {
             // 光量を上げる
             m_lightscript.intensity = 10f;
@@ -82,6 +112,9 @@ public class Player_Light : MonoBehaviour
 
             // タイマーをリセットする
             m_FlashCoolTimer = m_UseFlashInterval;
+
+            //バッテリーを減少させる
+            BatteryFlash();
         }
     }
 
@@ -103,5 +136,43 @@ public class Player_Light : MonoBehaviour
             // 光量を徐々に下げていく
             m_lightscript.intensity = intensity;
         }
+    }
+
+    //電力を時間経過で消費
+    public void BatteryDecrease()
+    {
+        // 計測時間
+        float elapsedTime = 0f;
+        elapsedTime += Time.deltaTime;
+
+        //バッテリーを減らす（０になったら止める）
+        if (m_currentBattery >= 0)
+        {
+            m_currentBattery -= elapsedTime;
+        }
+        //電力が減った後のゲージの見た目を更新
+        m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
+
+    }
+
+
+    //電力をフラッシュライトで消費
+    public void BatteryFlash()
+    {
+        if(m_currentBattery >= 10)
+        {
+            m_currentBattery -= 10;
+            //電力が減った後のゲージの見た目を更新
+            m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
+        }
+        
+    }
+
+    //アイテムで電力を回復
+    public void HealBattery()
+    {
+        m_currentBattery += 10;
+        //電力が回復した後のゲージの見た目を更新
+        m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
     }
 }

@@ -11,6 +11,8 @@ public class Player_Move : MonoBehaviour
     //プレイヤーの回転スピード
     [SerializeField]
     [Header("回転スピード")] public float m_RotationSpeed = 0.15f;
+
+
    
 
     // Start is called before the first frame update
@@ -22,7 +24,17 @@ public class Player_Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //左スティックで移動
+        PlayerMove();
 
+        //右スティックで回転
+        PlayerRotate();
+      
+    }
+
+    //プレイヤーの移動用メソッド
+    void PlayerMove()
+    {
         //左スティックの水平入力軸の値を取得する
         float horizontakInput = Input.GetAxis("Horizontal");
 
@@ -31,17 +43,18 @@ public class Player_Move : MonoBehaviour
 
         //左スティックの入力から定義された座標に移動
         transform.localPosition += new Vector3(horizontakInput, 0, verticalInput) * m_MoveSpeed * Time.deltaTime;
+    }
 
+    //プレイヤーの回転用メソッド
+    void PlayerRotate()
+    {
 
-        //右スティックが入力されている時のみ処理
-        if(Input.GetAxis("Horizontal2") != 0)
-        {
-            //右スティックの水平入力軸の値を取得する
-            float horizontak2Input = Input.GetAxis("Horizontal2");
+        //右スティックの水平入力軸の値を取得する
+        float horizontak2Input = Input.GetAxis("Horizontal2");
 
-            //右スティックでプレイヤーを回転
-            transform.Rotate(new Vector3(0, m_RotationSpeed * horizontak2Input, 0));
-        }
-        
+        //右スティックでプレイヤーを回転
+        transform.Rotate(new Vector3(0, m_RotationSpeed * horizontak2Input, 0));
+
+       
     }
 }
