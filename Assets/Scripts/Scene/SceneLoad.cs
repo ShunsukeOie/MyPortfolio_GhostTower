@@ -18,7 +18,7 @@ public class SceneLoad : MonoBehaviour
             if (m_sSceneName == null) { return; }
 
             // 指定のシーンをロードする
-            UnityEngine.SceneManagement.SceneManager.LoadScene(m_sSceneName);
+            SceneManager.LoadScene(m_sSceneName);
         }
 
     }
