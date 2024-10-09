@@ -28,6 +28,7 @@ public class Player_Light : MonoBehaviour
     //ゲージ操作クラスの取得
     [SerializeField] private GaugeController m_gaugeController;
 
+ 
     void Start()
     {
         // スクリプトを取得する
@@ -39,6 +40,7 @@ public class Player_Light : MonoBehaviour
 
         //ゲージを初期値で更新
         m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
+
     }
 
     void Update()
@@ -64,6 +66,27 @@ public class Player_Light : MonoBehaviour
         if(m_isLighting == true)
         {
             BatteryDecrease();
+        }
+
+
+        //バッテリーの残量でゲージの色を変更する
+        if(m_currentBattery >= 50)
+        {
+            //緑
+            m_gaugeController.ChangeColor1();
+            //Debug.Log("1");
+        }
+        else if(m_currentBattery <= 50 && m_currentBattery >= 20)
+        {
+            //黄
+            m_gaugeController.ChangeColor2();
+            //Debug.Log("2");
+        }
+        else
+        {
+            //赤
+            m_gaugeController.ChangeColor3();
+            Debug.Log("3");
         }
     }
 

@@ -12,8 +12,8 @@ public class GaugeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //色情報を取得
-        Color color = gameObject.GetComponent<Image>().color;
+        //色の初期化
+        gameObject.GetComponent<Image>().color = new Color(0.0f, 255.0f, 0.0f, 255.0f);
     }
 
     //ゲージの見た目を設定
@@ -22,7 +22,23 @@ public class GaugeController : MonoBehaviour
         _gaugeImage.fillAmount = current / max; //fillAmountを更新
 
     }
+    //緑色にする
+    public void ChangeColor1()
+    {
+        gameObject.GetComponent<Image>().color = new Color(0.0f, 255.0f, 0.0f, 255.0f);
+    }
+    //黄色にする
+    public void ChangeColor2()
+    {
+        gameObject.GetComponent<Image>().color = new Color(10.0f, 5.0f, 0.0f, 255.0f);
+    }
+    //赤色にする
+    public void ChangeColor3()
+    {
+        gameObject.GetComponent<Image>().color = new Color(255.0f, 1.0f, 0.0f, 255.0f);
+    }
 
+    
 
     // Update is called once per frame
     void Update()
