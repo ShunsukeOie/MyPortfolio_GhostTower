@@ -17,8 +17,6 @@ public class Enemy_Search : MonoBehaviour
     // 配列のインデックス番号指定用変数
     private int m_destNum = 0;
 
-
-    Player_Light m_plyLight;
     // プレイヤーの位置を格納する変数
     [SerializeField]
     private Transform m_player;
@@ -27,9 +25,13 @@ public class Enemy_Search : MonoBehaviour
     [SerializeField, Header("見える範囲")]
     private float m_angle = 45.0f;
 
-    public bool isStan = false;
+    // スタン時間計測用
     private float m_stanTime = 1.0f;
     private float m_stanTimer = 0.0f;
+
+    // スタン状態かどうかのフラグ
+    [HideInInspector]
+    public bool isStan = false;
 
     void Start()
     {
@@ -37,24 +39,32 @@ public class Enemy_Search : MonoBehaviour
         m_startPos = transform.position;
         // コンポーネント取得
         m_agent = GetComponent<NavMeshAgent>();
-        m_plyLight = GetComponent<Player_Light>();
         // 敵を次の目的地に向かって動かす
         m_agent.destination = m_goals[m_destNum].position;
     }
 
     void Update()
     {
+        // スタン状態だったら（プレイヤーからライトを食らったらtrueになる）
         if(isStan)
         {
+            // 移動速度を0にする
             m_agent.speed = 0.0f;
+
+            // 時間を加算する
             m_stanTimer += Time.deltaTime;
+            // タイマーがスタン時間を超えたら
             if(m_stanTimer >= m_stanTime)
             {
+                // スピードを元に戻す
                 m_agent.speed = 2.0f;
+                // 時間をリセットする
                 m_stanTimer = 0.0f;
+                // フラグを降ろす
                 isStan = false;
             }
         }
+        // スタン状態じゃない
         else
         {
             // m_agent.remainingDistanceは敵と次の目的地までの距離を表している
@@ -63,6 +73,7 @@ public class Enemy_Search : MonoBehaviour
             {
                 // プレイヤーを見つけてないときの速度
                 m_agent.speed = 2.0f;
+                // 次の目的地に向かう
                 nextGoal();
             }
         }
@@ -99,31 +110,34 @@ public class Enemy_Search : MonoBehaviour
     // 範囲内に入っていたら
     private void OnTriggerStay(Collider other)
     {
-        // タグがプレイヤーか判別する
-        if(other.gameObject.tag == "Player")
+        if(!isStan)
         {
-            // 正面に対して、プレイヤーの位置を取得し、45度以内か算出
-            Vector3 posDelta = other.transform.position - this.transform.position;
-            // Angle()関数で正面に対して何度の角度かを取得する
-            float target_angle = Vector3.Angle(this.transform.forward, posDelta);
-
-            // target_angleがm_angleに収まっているかどうか
-            if(target_angle < m_angle)
+            // タグがプレイヤーか判別する
+            if (other.gameObject.tag == "Player")
             {
-                // レイを使用してtargeに当たっているか判別する
-                if(Physics.Raycast(this.transform.position, posDelta, out RaycastHit hit))
+                // 正面に対して、プレイヤーの位置を取得し、45度以内か算出
+                Vector3 posDelta = other.transform.position - this.transform.position;
+                // Angle()関数で正面に対して何度の角度かを取得する
+                float target_angle = Vector3.Angle(this.transform.forward, posDelta);
+
+                // target_angleがm_angleに収まっているかどうか
+                if (target_angle < m_angle)
                 {
-                    // レイに当たったのがプレイヤーだったら処理する
-                    if(hit.collider == other)
+                    // レイを使用してtargeに当たっているか判別する
+                    if (Physics.Raycast(this.transform.position, posDelta, out RaycastHit hit))
                     {
-                        // プレイヤーを見つけたら早くなる
-                        m_agent.speed = 3.0f;
-                        // プレイヤーの位置に向かって移動する
-                        m_agent.SetDestination(m_player.position);
-                        Debug.Log("見えている");
+                        // レイに当たったのがプレイヤーだったら処理する
+                        if (hit.collider == other)
+                        {
+                            // プレイヤーを見つけたら早くなる
+                            m_agent.speed = 3.0f;
+                            // プレイヤーの位置に向かって移動する
+                            m_agent.SetDestination(m_player.position);
+                            Debug.Log("見えている");
+                        }
                     }
                 }
             }
-        }
+        }       
     }
 }
