@@ -17,6 +17,8 @@ public class Enemy_Search : MonoBehaviour
     // 配列のインデックス番号指定用変数
     private int m_destNum = 0;
 
+
+    Player_Light m_plyLight;
     // プレイヤーの位置を格納する変数
     [SerializeField]
     private Transform m_player;
@@ -25,25 +27,44 @@ public class Enemy_Search : MonoBehaviour
     [SerializeField, Header("見える範囲")]
     private float m_angle = 45.0f;
 
+    public bool isStan = false;
+    private float m_stanTime = 1.0f;
+    private float m_stanTimer = 0.0f;
+
     void Start()
     {
         // スタート位置を保存する
         m_startPos = transform.position;
         // コンポーネント取得
         m_agent = GetComponent<NavMeshAgent>();
+        m_plyLight = GetComponent<Player_Light>();
         // 敵を次の目的地に向かって動かす
         m_agent.destination = m_goals[m_destNum].position;
     }
 
     void Update()
     {
-        // m_agent.remainingDistanceは敵と次の目的地までの距離を表している
-        // 近づくほど0に近づいていく
-        if (m_agent.remainingDistance < 0.5f)
+        if(isStan)
         {
-            // プレイヤーを見つけてないときの速度
-            m_agent.speed = 2.0f;
-            nextGoal();
+            m_agent.speed = 0.0f;
+            m_stanTimer += Time.deltaTime;
+            if(m_stanTimer >= m_stanTime)
+            {
+                m_agent.speed = 2.0f;
+                m_stanTimer = 0.0f;
+                isStan = false;
+            }
+        }
+        else
+        {
+            // m_agent.remainingDistanceは敵と次の目的地までの距離を表している
+            // 近づくほど0に近づいていく
+            if (m_agent.remainingDistance < 0.5f)
+            {
+                // プレイヤーを見つけてないときの速度
+                m_agent.speed = 2.0f;
+                nextGoal();
+            }
         }
     }
 
