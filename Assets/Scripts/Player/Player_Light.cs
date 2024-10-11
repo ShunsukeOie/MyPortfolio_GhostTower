@@ -90,11 +90,11 @@ public class Player_Light : MonoBehaviour
             m_gaugeController.ChangeColor2();
             //Debug.Log("2");
         }
-        else
+        else 
         {
             //ê‘
             m_gaugeController.ChangeColor3();
-            Debug.Log("3");
+            
         }
     }
 
