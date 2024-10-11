@@ -85,7 +85,7 @@ public class Enemy_Search : MonoBehaviour
         // インデックス番号を更新する
         m_destNum += 1;
         // 最終番号になったら
-        if (m_destNum == 3)
+        if (m_destNum == 8)
         {
             // 最初の番号に戻す
             m_destNum = 0;
