@@ -130,7 +130,7 @@ public class Enemy_Search : MonoBehaviour
                         if (hit.collider == other)
                         {
                             // プレイヤーを見つけたら早くなる
-                            m_agent.speed = 3.0f;
+                            m_agent.speed = 3.5f;
                             // プレイヤーの位置に向かって移動する
                             m_agent.SetDestination(m_player.position);
                             Debug.Log("見えている");

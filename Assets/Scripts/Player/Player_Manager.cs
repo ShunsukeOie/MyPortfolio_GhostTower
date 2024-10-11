@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Player_Manager : MonoBehaviour
 {
-    private Vector3 m_startPos;
+    private Vector3 startPos;
     // Start is called before the first frame update
     void Start()
     {
-        m_startPos = transform.position;
+        startPos = transform.position;
     }
 
     // Update is called once per frame
@@ -21,7 +21,7 @@ public class Player_Manager : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            transform.position = m_startPos;
+            transform.position = startPos;
         }
     }
 }

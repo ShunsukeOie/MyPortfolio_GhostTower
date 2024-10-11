@@ -8,23 +8,25 @@ public class Player_Light : MonoBehaviour
 {
     // ライトオブジェクト
     [SerializeField, Header("ライトオブジェクト")]
-    private GameObject m_LightObj;
+    private GameObject LightObj;
 
     // フラッシュの範囲
     [SerializeField, Header("フラッシュの範囲")]
-    private float m_angle = 45.0f;
+    private float angle = 45.0f;
 
+    // エネミーがスタンできる状態かを判定するフラグ
     [HideInInspector]
-    public bool canStopEnemy = false;
-    Enemy_Search esearch = null;
+    private bool canStopEnemy = false;
+    // エネミーのスクリプト取得用
+    private Enemy_Search esearch = null;
 
     // ライトが点灯しているか判定するフラグ
-    private bool m_isLighting;
+    private bool isLighting;
 
     // フラッシュのインターバル用の変数
     [SerializeField]
-    private float m_UseFlashInterval;
-    private float m_FlashCoolTimer;
+    private float UseFlashInterval;
+    private float FlashCoolTimer;
     
     // ライトのスクリプトを格納する変数
     Light m_lightscript;
@@ -40,11 +42,11 @@ public class Player_Light : MonoBehaviour
     void Start()
     {
         // スクリプトを取得する
-        m_lightscript = m_LightObj.GetComponent<Light>();
+        m_lightscript = LightObj.GetComponent<Light>();
         // フラグを初期化
-        m_isLighting = false;
+        isLighting = false;
         // ライトオブジェクトを非アクティブにしておく
-        m_LightObj.SetActive(false);
+        LightObj.SetActive(false);
 
         //ゲージを初期値で更新
         m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
@@ -58,7 +60,7 @@ public class Player_Light : MonoBehaviour
         if(m_currentBattery <= 0)
         {
             // ライトオブジェクトを非アクティブにする
-            m_LightObj.SetActive(false);
+            LightObj.SetActive(false);
         }
 
         // ライトを点灯する
@@ -71,7 +73,7 @@ public class Player_Light : MonoBehaviour
         }
         
 
-        if(m_isLighting == true)
+        if(isLighting == true)
         {
             BatteryDecrease();
         }
@@ -103,22 +105,22 @@ public class Player_Light : MonoBehaviour
     {
 
         // ライトが点灯していなかったら処理する
-        if (Input.GetButtonDown("Light") && !m_isLighting && m_currentBattery > 0)
+        if (Input.GetButtonDown("Light") && !isLighting && m_currentBattery > 0)
         {
             // 点灯しているかのフラグを上げる
-            m_isLighting = true;
+            isLighting = true;
             // ライトオブジェクトをアクティブにする
-            m_LightObj.SetActive(true);
+            LightObj.SetActive(true);
 
         }
 
         // ライトが点灯していたら処理する
-        else if (Input.GetButtonDown("Light") && m_isLighting)
+        else if (Input.GetButtonDown("Light") && isLighting)
         {
             // 点灯しているかのフラグを下げる
-            m_isLighting = false;
+            isLighting = false;
             // ライトオブジェクトを非アクティブにする
-            m_LightObj.SetActive(false);
+            LightObj.SetActive(false);
 
         }
     }
@@ -127,13 +129,13 @@ public class Player_Light : MonoBehaviour
     void Flash()
     {
         // 入力制限用
-        if (m_FlashCoolTimer >= 0.0f)
+        if (FlashCoolTimer >= 0.0f)
         {
-            m_FlashCoolTimer -= Time.deltaTime;
+            FlashCoolTimer -= Time.deltaTime;
         }
 
         // ボタンが押されたかつライトが付いているかつタイマーが0以下かつバッテリーがある場合処理する
-        if (Input.GetButtonDown("Flash") && m_isLighting && m_FlashCoolTimer <= 0.0f && m_currentBattery > 0)
+        if (Input.GetButtonDown("Flash") && isLighting && FlashCoolTimer <= 0.0f && m_currentBattery > 0)
         {
             if(canStopEnemy)
             {
@@ -149,7 +151,7 @@ public class Player_Light : MonoBehaviour
             StartCoroutine(Downintensity());
 
             // タイマーをリセットする
-            m_FlashCoolTimer = m_UseFlashInterval;
+            FlashCoolTimer = UseFlashInterval;
 
             //バッテリーを減少させる
             BatteryFlash();
@@ -188,7 +190,7 @@ public class Player_Light : MonoBehaviour
             float target_angle = Vector3.Angle(this.transform.forward, posDelta);
 
             // target_angleがm_angleに収まっているかどうか
-            if (target_angle < m_angle)
+            if (target_angle < angle)
             {
                 // レイを使用してtargeに当たっているか判別する
                 if (Physics.Raycast(this.transform.position, posDelta, out RaycastHit hit))
