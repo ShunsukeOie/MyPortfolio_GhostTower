@@ -246,7 +246,8 @@ public class Player_Light : MonoBehaviour
     //アイテムで電力を回復
     public void HealBattery()
     {
-        m_currentBattery += 10;
+
+        m_currentBattery += 50;
         //電力が回復した後のゲージの見た目を更新
         m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
     }
