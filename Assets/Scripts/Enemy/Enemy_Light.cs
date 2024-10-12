@@ -8,17 +8,19 @@ public class Enemy_Light : MonoBehaviour
     [HideInInspector]
     public bool isLighting = false;
     
-    //
+    // Lightのスクリプト格納用
     [SerializeField]
     private Light m_lightscript;
 
     void Start()
     {
+        // コンポーネントを取得する
         m_lightscript = GetComponent<Light>();
     }
 
     void Update()
     {
+        // 光状態だったら
        if(isLighting)
        {
             // 光量を上げる

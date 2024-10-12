@@ -26,7 +26,7 @@ public class Enemy_Search : MonoBehaviour
     private float m_angle = 45.0f;
 
     // スタン時間計測用
-    private float m_stanTime = 1.0f;
+    private float m_stanTime = 2.0f;
     private float m_stanTimer = 0.0f;
 
     // スタン状態かどうかのフラグ
@@ -136,6 +136,12 @@ public class Enemy_Search : MonoBehaviour
                             Debug.Log("見えている");
                         }
                     }
+                }
+                // 敵がプレイヤーを追わなくする
+                else
+                {
+                    // 敵を次の目的地に向かって動かす
+                    m_agent.destination = m_goals[m_destNum].position;
                 }
             }
         }       
