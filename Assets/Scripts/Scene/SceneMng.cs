@@ -7,10 +7,15 @@ using UnityEngine.SceneManagement;
 // MonoBehaviourクラスは削除すること
 public static class SceneController
 {
+    // どのステージをクリアしたか判定するために使用する
+    public static bool stage1Clear = false;
+    public static bool stage2Clear = false;
+    public static bool stage3Clear = false;
+
     public static string sceneName;
 
     // 「このメソッドが実行された時に開いているシーンの名前」を取得する。
-    // 今回の場合は、ゲームオーバーの条件が揃った時に、このメソッドを呼び出す。
+    // 今回の場合は、ゲームオーバーの条件が揃った時に、このメソッドを実行する。
     public static void CurrentSceneName()
     {
         sceneName = SceneManager.GetActiveScene().name;
@@ -22,5 +27,54 @@ public static class SceneController
     public static void BackToBeforeScene()
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+
+    // どのステージをクリアしたかを判定し、指定のシーンをロードする。
+    // ゴールオブジェクトに触れた時に、このメソッドを実行する。
+    public static void StageClaer()
+    {
+        sceneName = SceneManager.GetActiveScene().name;
+        switch (sceneName)
+        {
+            // クリアしたステージがStage1だったら
+            case "Game_Stage1":
+                {
+                    // まだフラグが上がっていないときのみ
+                    if (!stage1Clear)
+                    {
+                        // フラグを上げる
+                        stage1Clear = true;
+                    }
+                    SceneManager.LoadScene("Game_Stage2");
+                }
+                break;
+
+            // クリアしたステージがStage2だったら
+            case "Game_Stage2":
+                {
+                    // まだフラグが上がっていないときのみ
+                    if (!stage2Clear)
+                    {
+                        // フラグを上げる
+                        stage2Clear = true;
+                    }
+                    SceneManager.LoadScene("Game_Stage3");
+                }
+                break;
+
+            // クリアしたステージがStage3だったら
+            case "Game_Stage3":
+                {
+                    // まだフラグが上がっていないときのみ
+                    if (!stage3Clear)
+                    {
+                        // フラグを上げる
+                        stage3Clear = true;
+                    }
+                    SceneManager.LoadScene("GameClear");
+                }
+                break;
+        }
     }
 }
