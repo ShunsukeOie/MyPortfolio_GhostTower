@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 // MonoBehaviourクラスは削除すること
 public static class SceneController
 {
-    // どのステージをクリアしたか判定するために使用する
+    // ステージがクリアされたかを判定する
     public static bool stage1Clear = false;
     public static bool stage2Clear = false;
     public static bool stage3Clear = false;
@@ -46,7 +46,8 @@ public static class SceneController
                         // フラグを上げる
                         stage1Clear = true;
                     }
-                    SceneManager.LoadScene("Game_Stage2");
+                    // ステージセレクトの画面に戻る
+                    SceneManager.LoadScene("StageSelect");
                 }
                 break;
 
@@ -59,7 +60,8 @@ public static class SceneController
                         // フラグを上げる
                         stage2Clear = true;
                     }
-                    SceneManager.LoadScene("Game_Stage3");
+                    // ステージセレクトの画面に戻る
+                    SceneManager.LoadScene("StageSelect");
                 }
                 break;
 
@@ -72,6 +74,7 @@ public static class SceneController
                         // フラグを上げる
                         stage3Clear = true;
                     }
+                    // ゲームクリアの画面に移る
                     SceneManager.LoadScene("GameClear");
                 }
                 break;

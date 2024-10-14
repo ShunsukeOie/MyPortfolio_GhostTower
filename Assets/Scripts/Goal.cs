@@ -10,7 +10,7 @@ public class Goal : MonoBehaviour
         // タグがプレイヤー以外なら終了
         if (collision.gameObject.tag != "Player") { return; }
 
-        // 度のシーンをクリアしたかを伝える
+        // どのシーンをクリアしたかを伝える
         SceneController.StageClaer();
     }
 }
