@@ -7,27 +7,31 @@ using UnityEngine.UIElements;
 public class Enemy_Search : MonoBehaviour
 {
     // 自身のスタート位置を格納する変数
-    private Vector3 m_startPos;
+    private Vector3 startPos;
 
     // 目的地を設定する変数
     [SerializeField, Header("目的地")]
-    private Transform[] m_goals = null;
+    private Transform[] goals = null;
+
     // ナビゲーションのコンポーネントを格納する変数
-    private NavMeshAgent m_agent;
+    private NavMeshAgent agent;
+
     // 配列のインデックス番号指定用変数
-    private int m_destNum = 0;
+    private int destNum = 0;
 
     // プレイヤーの位置を格納する変数
     [SerializeField]
-    private Transform m_player;
+    private Transform player;
+
+    private bool isChasePlayer = false;
 
     // 見える範囲
     [SerializeField, Header("見える範囲")]
-    private float m_angle = 45.0f;
+    private float angle = 45.0f;
 
     // スタン時間計測用
-    private float m_stanTime = 2.0f;
-    private float m_stanTimer = 0.0f;
+    private float stanTime = 2.0f;
+    private float stanTimer = 0.0f;
 
     // スタン状態かどうかのフラグ
     [HideInInspector]
@@ -36,11 +40,11 @@ public class Enemy_Search : MonoBehaviour
     void Start()
     {
         // スタート位置を保存する
-        m_startPos = transform.position;
+        startPos = transform.position;
         // コンポーネント取得
-        m_agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
         // 敵を次の目的地に向かって動かす
-        m_agent.destination = m_goals[m_destNum].position;
+        agent.destination = goals[destNum].position;
     }
 
     void Update()
@@ -49,17 +53,17 @@ public class Enemy_Search : MonoBehaviour
         if(isStan)
         {
             // 移動速度を0にする
-            m_agent.speed = 0.0f;
+            agent.speed = 0.0f;
 
             // 時間を加算する
-            m_stanTimer += Time.deltaTime;
+            stanTimer += Time.deltaTime;
             // タイマーがスタン時間を超えたら
-            if(m_stanTimer >= m_stanTime)
+            if(stanTimer >= stanTime)
             {
                 // スピードを元に戻す
-                m_agent.speed = 2.0f;
+                agent.speed = 2.0f;
                 // 時間をリセットする
-                m_stanTimer = 0.0f;
+                stanTimer = 0.0f;
                 // フラグを降ろす
                 isStan = false;
             }
@@ -69,12 +73,19 @@ public class Enemy_Search : MonoBehaviour
         {
             // m_agent.remainingDistanceは敵と次の目的地までの距離を表している
             // 近づくほど0に近づいていく
-            if (m_agent.remainingDistance < 0.5f)
+            if (agent.remainingDistance < 0.5f && !isChasePlayer)
             {
                 // プレイヤーを見つけてないときの速度
-                m_agent.speed = 2.0f;
+                agent.speed = 2.0f;
                 // 次の目的地に向かう
                 nextGoal();
+            }
+
+            // プレイヤーを追うフラグが立っていたら
+            if (isChasePlayer)
+            {
+                // プレイヤーの位置に向かって移動する
+                agent.SetDestination(player.position);
             }
         }
     }
@@ -83,17 +94,17 @@ public class Enemy_Search : MonoBehaviour
     void nextGoal()
     {
         // インデックス番号を更新する
-        m_destNum += 1;
+        destNum += 1;
         // 最終番号になったら
-        if (m_destNum == 8)
+        if (destNum == 8)
         {
             // 最初の番号に戻す
-            m_destNum = 0;
+            destNum = 0;
         }
         // 敵を次の目的地に向かって動かす
-        m_agent.destination = m_goals[m_destNum].position;
+        agent.destination = goals[destNum].position;
 
-        Debug.Log(m_destNum);
+        Debug.Log(destNum);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -102,7 +113,16 @@ public class Enemy_Search : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             // 元の位置に戻る
-            transform.position = m_startPos;
+            transform.position = startPos;
+
+            // 敵を最初の目的地に向かって動かす
+            destNum = 0;
+            agent.destination = goals[destNum].position;
+
+            // プレイヤーを追わなくする
+            isChasePlayer = false;
+            // 速度を元に戻す
+            agent.speed = 2.0f;
         }
     }
 
@@ -121,7 +141,7 @@ public class Enemy_Search : MonoBehaviour
                 float target_angle = Vector3.Angle(this.transform.forward, posDelta);
 
                 // target_angleがm_angleに収まっているかどうか
-                if (target_angle < m_angle)
+                if (target_angle < angle)
                 {
                     // レイを使用してtargeに当たっているか判別する
                     if (Physics.Raycast(this.transform.position, posDelta, out RaycastHit hit))
@@ -130,9 +150,8 @@ public class Enemy_Search : MonoBehaviour
                         if (hit.collider == other)
                         {
                             // プレイヤーを見つけたら早くなる
-                            m_agent.speed = 3.5f;
-                            // プレイヤーの位置に向かって移動する
-                            m_agent.SetDestination(m_player.position);
+                            agent.speed = 3.5f;
+                            isChasePlayer = true;
                             Debug.Log("見えている");
                         }
                     }
@@ -140,8 +159,10 @@ public class Enemy_Search : MonoBehaviour
                 // 敵がプレイヤーを追わなくする
                 else
                 {
-                    // 敵を次の目的地に向かって動かす
-                    m_agent.destination = m_goals[m_destNum].position;
+                    // フラグを降ろす
+                    isChasePlayer = false;
+                    // 敵をプレイヤーを追う前の目的地に向かって動かす
+                    agent.destination = goals[destNum].position;
                 }
             }
         }       
