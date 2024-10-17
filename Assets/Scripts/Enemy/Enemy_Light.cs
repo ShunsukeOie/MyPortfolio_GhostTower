@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Enemy_Light : MonoBehaviour
 {
+    // Lightのスクリプト格納用
+    [SerializeField]
+    private Light _lightscript;
+
     // 光るかどうかのフラグ
     [HideInInspector]
     public bool isLighting = false;
     
-    // Lightのスクリプト格納用
-    [SerializeField]
-    private Light lightscript;
-
     void Start()
     {
         // コンポーネントを取得する
-        lightscript = GetComponent<Light>();
+        _lightscript = GetComponent<Light>();
     }
 
     void Update()
@@ -24,7 +24,7 @@ public class Enemy_Light : MonoBehaviour
        if(isLighting)
        {
             // 光量を上げる
-            lightscript.intensity = 5f;
+            _lightscript.intensity = 5f;
 
             // 光量を下げていくコルーチンスタート
             StartCoroutine(Downintensity());
@@ -48,7 +48,7 @@ public class Enemy_Light : MonoBehaviour
             yield return new WaitForSeconds(waittime);
 
             // 光量を徐々に下げていく
-            lightscript.intensity = intensity;
+            _lightscript.intensity = intensity;
         }
     }
 }

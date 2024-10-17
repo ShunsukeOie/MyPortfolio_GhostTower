@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
         // 時間が0以下になったら
         if(countdown <= 0)
         {
+            SceneController.CurrentSceneName();
+
             // ゲームオーバーのシーンをロードする
             SceneManager.LoadScene("GameOver");
         }

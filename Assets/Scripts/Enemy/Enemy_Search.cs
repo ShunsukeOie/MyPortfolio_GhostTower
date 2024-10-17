@@ -18,7 +18,7 @@ public class Enemy_Search : MonoBehaviour
     private Transform player;
 
     // ナビゲーションのコンポーネントを格納する変数
-    private NavMeshAgent agent;
+    private NavMeshAgent _agent;
 
     // 配列のインデックス番号指定用変数
     private int destNum = 0;
@@ -45,9 +45,9 @@ public class Enemy_Search : MonoBehaviour
         // スタート位置を保存する
         startPos = transform.position;
         // コンポーネント取得
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
         // 敵を次の目的地に向かって動かす
-        agent.destination = goals[destNum].position;
+        _agent.destination = goals[destNum].position;
     }
 
     void Update()
@@ -62,7 +62,7 @@ public class Enemy_Search : MonoBehaviour
         if (isStan)
         {
             // 移動速度を0にする
-            agent.speed = 0.0f;
+            _agent.speed = 0.0f;
 
             // 時間を加算する
             stanTimer += Time.deltaTime;
@@ -70,7 +70,7 @@ public class Enemy_Search : MonoBehaviour
             if (stanTimer >= stanTime)
             {
                 // スピードを元に戻す
-                agent.speed = 2.0f;
+                _agent.speed = 2.0f;
                 // 時間をリセットする
                 stanTimer = 0.0f;
                 // フラグを降ろす
@@ -82,10 +82,10 @@ public class Enemy_Search : MonoBehaviour
         {
             // m_agent.remainingDistanceは敵と次の目的地までの距離を表している
             // 近づくほど0に近づいていく
-            if (agent.remainingDistance < 0.5f && !isChasePlayer)
+            if (_agent.remainingDistance < 0.5f && !isChasePlayer)
             {
                 // プレイヤーを見つけてないときの速度
-                agent.speed = 2.0f;
+                _agent.speed = 2.0f;
                 // 次の目的地に向かう
                 nextGoal();
             }
@@ -94,7 +94,7 @@ public class Enemy_Search : MonoBehaviour
             if (isChasePlayer)
             {
                 // プレイヤーの位置に向かって移動する
-                agent.SetDestination(player.position);
+                _agent.SetDestination(player.position);
             }
         }
     }
@@ -111,7 +111,7 @@ public class Enemy_Search : MonoBehaviour
             destNum = 0;
         }
         // 敵を次の目的地に向かって動かす
-        agent.destination = goals[destNum].position;
+        _agent.destination = goals[destNum].position;
 
         Debug.Log(destNum);
     }
@@ -126,13 +126,13 @@ public class Enemy_Search : MonoBehaviour
 
             // 敵を最初の目的地に向かって動かす
             destNum = 0;
-            agent.destination = goals[destNum].position;
+            _agent.destination = goals[destNum].position;
 
             // プレイヤーを追わなくする
             isChasePlayer = false;
 
             // 速度を元に戻す
-            agent.speed = 2.0f;
+            _agent.speed = 2.0f;
         }
     }
 
@@ -160,7 +160,7 @@ public class Enemy_Search : MonoBehaviour
                         if (hit.collider == other)
                         {
                             // プレイヤーを見つけたら早くなる
-                            agent.speed = 3.5f;
+                            _agent.speed = 3.5f;
                             isChasePlayer = true;
                             Debug.Log("見えている");
                         }
@@ -172,7 +172,7 @@ public class Enemy_Search : MonoBehaviour
                     // フラグを降ろす
                     isChasePlayer = false;
                     // 敵をプレイヤーを追う前の目的地に向かって動かす
-                    agent.destination = goals[destNum].position;
+                    _agent.destination = goals[destNum].position;
                 }
             }
         }       

@@ -9,35 +9,47 @@ public class Player_Light : MonoBehaviour
     // ライトオブジェクト
     [SerializeField, Header("ライトオブジェクト")]
     private GameObject LightObj;
+    // ライトのスクリプトを格納する変数
+    private Light m_lightscript;
+
+    // フラッシュを判定するオブジェクト
+    //（別にすることで敵の索敵範囲との干渉をなくす）
+    [SerializeField, Header("フラッシュ判定オブジェクト")]
+    private GameObject JudgeObje;
+    // フラッシュ判定用のスクリプト格納用
+    private Flash_Judge _Judge;
 
     //ゲージ操作クラスの取得用変数
-    [SerializeField]
+    [SerializeField, Header("ゲージ操作クラス")]
     private GaugeController m_gaugeController;
-    // エネミーのスクリプト取得用変数
-    private Enemy_Search esearch = null;
-    // ライトのスクリプトを格納する変数
-    private Light m_lightscript;    
 
     // フラッシュの範囲
     [SerializeField, Header("フラッシュの範囲")]
     private float angle = 45.0f;
+
     // フラッシュのインターバル用の変数
-    [SerializeField]
+    [SerializeField, Header("フラッシュのインターバル")]
     private float UseFlashInterval;
     private float FlashCoolTimer;
+
     //バッテリー用
     private float m_maxBattery = 100;     //最大電力
     private float m_currentBattery = 100; //現在の電力
 
-    // エネミーがスタンできる状態かを判定するフラグ
-    private bool canStopEnemy = false;    
     // ライトが点灯しているか判定するフラグ
-    private bool isLighting;   
- 
+    private bool isLighting;
+
+    // エネミーがスタンできる状態かを判定するフラグ
+    [HideInInspector]
+    public bool canStopEnemy = false;
+    
+
     void Start()
     {
         // スクリプトを取得する
         m_lightscript = LightObj.GetComponent<Light>();
+        _Judge = JudgeObje.GetComponent<Flash_Judge>();
+
         // フラグを初期化
         isLighting = false;
         // ライトオブジェクトを非アクティブにしておく
@@ -52,7 +64,7 @@ public class Player_Light : MonoBehaviour
     {
 
         //　バッテリーが0になったらライトを消す
-        if(m_currentBattery <= 0)
+        if (m_currentBattery <= 0)
         {
             // ライトオブジェクトを非アクティブにする
             LightObj.SetActive(false);
@@ -60,38 +72,39 @@ public class Player_Light : MonoBehaviour
 
         // ライトを点灯する
         LightUp();
-        
+
         // バッテリーの残量が10以上ならフラッシュする
-        if(m_currentBattery >= 10)
+        if (m_currentBattery >= 10)
         {
             Flash();
         }
-        
 
-        if(isLighting == true)
+        // ライトが点灯していたら処理する
+        if (isLighting == true)
         {
+            // バッテリーを時間経過で減らしていく
             BatteryDecrease();
         }
 
 
         //バッテリーの残量でゲージの色を変更する
-        if(m_currentBattery >= 50)
+        if (m_currentBattery >= 50)
         {
             //緑
             m_gaugeController.ChangeColor1();
             //Debug.Log("1");
         }
-        else if(m_currentBattery <= 50 && m_currentBattery >= 20)
+        else if (m_currentBattery <= 50 && m_currentBattery >= 20)
         {
             //黄
             m_gaugeController.ChangeColor2();
             //Debug.Log("2");
         }
-        else 
+        else
         {
             //赤
             m_gaugeController.ChangeColor3();
-            
+
         }
     }
 
@@ -132,11 +145,14 @@ public class Player_Light : MonoBehaviour
         // ボタンが押されたかつライトが付いているかつタイマーが0以下かつバッテリーがある場合処理する
         if (Input.GetButtonDown("Flash") && isLighting && FlashCoolTimer <= 0.0f && m_currentBattery > 0)
         {
-            if(canStopEnemy)
+            // 敵の動きを止めることが可能な状態なら処理する
+            if (canStopEnemy)
             {
-                if(esearch != null)
+                // フラッシュの判定用スクリプトにアクセスし、nullかどうか判定する
+                if (_Judge._esearch != null)
                 {
-                    esearch.isStan = true;
+                    // 敵スクリプトにアクセスしスタン状態にする
+                    _Judge._esearch.isStan = true;
                 }
             }
             // 光量を上げる
@@ -159,7 +175,7 @@ public class Player_Light : MonoBehaviour
         // ループ回数(値を増やすと滑らかになる)
         int loopcount = 50;
         // 下がりきるまでにかかる時間
-        float downtime = 0.7f;        
+        float downtime = 0.7f;
         // ウェイト時間算出
         float waittime = downtime / loopcount;
 
@@ -170,41 +186,6 @@ public class Player_Light : MonoBehaviour
 
             // 光量を徐々に下げていく
             m_lightscript.intensity = intensity;
-        }
-    }
-
-    // 範囲内に入っていたら
-    private void OnTriggerStay(Collider other)
-    {
-        // タグがエネミーか判別する
-        if (other.gameObject.tag == "Enemy")
-        {
-            // 正面に対して、プレイヤーの位置を取得し、45度以内か算出
-            Vector3 posDelta = other.transform.position - this.transform.position;
-            // Angle()関数で正面に対して何度の角度かを取得する
-            float target_angle = Vector3.Angle(this.transform.forward, posDelta);
-
-            // target_angleがm_angleに収まっているかどうか
-            if (target_angle < angle)
-            {
-                // レイを使用してtargeに当たっているか判別する
-                if (Physics.Raycast(this.transform.position, posDelta, out RaycastHit hit))
-                {
-                    // レイに当たったのがエネミーだったら処理する
-                    if (hit.collider == other)
-                    {
-                        esearch = other.GetComponent<Enemy_Search>();
-                        canStopEnemy = true;
-                        Debug.Log("見えている");
-                    }
-                }
-            }
-            else
-            {
-                esearch = null;
-                // 角度内にいなかったらフラグを降ろす
-                canStopEnemy = false;
-            }
         }
     }
 
@@ -229,13 +210,13 @@ public class Player_Light : MonoBehaviour
     //電力をフラッシュライトで消費
     public void BatteryFlash()
     {
-        if(m_currentBattery >= 10)
+        if (m_currentBattery >= 10)
         {
             m_currentBattery -= 10;
             //電力が減った後のゲージの見た目を更新
             m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
         }
-        
+
     }
 
     //アイテムで電力を回復
@@ -247,3 +228,4 @@ public class Player_Light : MonoBehaviour
         m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
     }
 }
+
