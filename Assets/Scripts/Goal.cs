@@ -9,7 +9,7 @@ public class Goal : MonoBehaviour
     {
         // タグがプレイヤー以外なら終了
         if (collision.gameObject.tag != "Player") { return; }
-        Debug.Log("kita");
+
         // どのシーンをクリアしたかを伝える
         SceneController.StageClaer();
     }

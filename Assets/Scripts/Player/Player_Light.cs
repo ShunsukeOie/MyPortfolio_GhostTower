@@ -10,34 +10,29 @@ public class Player_Light : MonoBehaviour
     [SerializeField, Header("ライトオブジェクト")]
     private GameObject LightObj;
 
+    //ゲージ操作クラスの取得用変数
+    [SerializeField]
+    private GaugeController m_gaugeController;
+    // エネミーのスクリプト取得用変数
+    private Enemy_Search esearch = null;
+    // ライトのスクリプトを格納する変数
+    private Light m_lightscript;    
+
     // フラッシュの範囲
     [SerializeField, Header("フラッシュの範囲")]
     private float angle = 45.0f;
-
-    // エネミーがスタンできる状態かを判定するフラグ
-    [HideInInspector]
-    private bool canStopEnemy = false;
-    // エネミーのスクリプト取得用
-    private Enemy_Search esearch = null;
-
-    // ライトが点灯しているか判定するフラグ
-    private bool isLighting;
-
     // フラッシュのインターバル用の変数
     [SerializeField]
     private float UseFlashInterval;
     private float FlashCoolTimer;
-    
-    // ライトのスクリプトを格納する変数
-    Light m_lightscript;
-
     //バッテリー用
     private float m_maxBattery = 100;     //最大電力
     private float m_currentBattery = 100; //現在の電力
 
-    //ゲージ操作クラスの取得
-    [SerializeField] private GaugeController m_gaugeController;
-
+    // エネミーがスタンできる状態かを判定するフラグ
+    private bool canStopEnemy = false;    
+    // ライトが点灯しているか判定するフラグ
+    private bool isLighting;   
  
     void Start()
     {

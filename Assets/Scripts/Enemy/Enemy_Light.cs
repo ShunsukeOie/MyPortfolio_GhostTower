@@ -10,12 +10,12 @@ public class Enemy_Light : MonoBehaviour
     
     // Lightのスクリプト格納用
     [SerializeField]
-    private Light m_lightscript;
+    private Light lightscript;
 
     void Start()
     {
         // コンポーネントを取得する
-        m_lightscript = GetComponent<Light>();
+        lightscript = GetComponent<Light>();
     }
 
     void Update()
@@ -24,7 +24,7 @@ public class Enemy_Light : MonoBehaviour
        if(isLighting)
        {
             // 光量を上げる
-            m_lightscript.intensity = 5f;
+            lightscript.intensity = 5f;
 
             // 光量を下げていくコルーチンスタート
             StartCoroutine(Downintensity());
@@ -48,7 +48,7 @@ public class Enemy_Light : MonoBehaviour
             yield return new WaitForSeconds(waittime);
 
             // 光量を徐々に下げていく
-            m_lightscript.intensity = intensity;
+            lightscript.intensity = intensity;
         }
     }
 }

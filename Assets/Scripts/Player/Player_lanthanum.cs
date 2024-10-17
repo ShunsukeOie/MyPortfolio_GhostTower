@@ -7,32 +7,36 @@ public class Player_lanthanum : MonoBehaviour
     // 目の前にあるランタンを格納する為の変数
     private GameObject LanthanumObj = null;
 
-    RaycastHit hit;
+    [SerializeField, Header("目の前にアイテムがある時に表示されるUI")]
+    private GameObject UIImage;
+
     [SerializeField, Header("Rayのサイズ")]
     private Vector3 BoxSize;
 
+    // レイの判定用
+    private RaycastHit hit;
+
     [SerializeField, Header("どの距離まで判定を取るか")]
     private float Distance;
-
+    
+    // アイテムが目の前にあるか
+    private bool IsItem = false;
 
     [Header("どのレイヤーの判定を取るか")]
     public LayerMask layerMask;
-    [SerializeField, Header("目の前にアイテムがある時に表示されるUI")]
-    private GameObject UIImage;
-    // アイテムが目の前にあるか
-    private bool IsItem = false;
 
     // Update is called once per frame
     void Update()
     {
-        //目の前にアイテムがあるかをチェック
-        ItemCheck();
+        //目の前にランタンがあるかをチェック
+        LanthanumCheck();
 
         // 光を灯す
         LightUp();
     }
 
-    void ItemCheck()
+    // 目の前にランタンがあるかチェックする関数
+    void LanthanumCheck()
     {
         // 目の前に箱型のレイを飛ばしてランタンがあるか判定する
         if(Physics.BoxCast(transform.position, BoxSize, transform.forward,
@@ -66,15 +70,20 @@ public class Player_lanthanum : MonoBehaviour
         }
     }
 
+    // ランタンを点灯させる関数
     void LightUp()
     {
-        //　Fキーで取得
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetButtonDown("LightUp"))
         {
+            // ランタンオブジェがnullじゃなかったら処理する
             if(LanthanumObj != null)
             {
+                // ランタンオブジェの子オブジェクトを取得し、Lightスクリプトを有効化する
                 LanthanumObj.transform.Find("candle_").gameObject.GetComponent<Light>().enabled = true;
+                // ランタンオブジェクトが反応しないようタグを切り替えておく
                 LanthanumObj.gameObject.tag = "none";
+                // UIを非表示にする
+                UIImage.SetActive(false);
             }
         }
     }

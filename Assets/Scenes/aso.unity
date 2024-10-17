@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e758236e4a4f63446881a13a847d9d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Battery: {fileID: 1858447933}
+  Battery: {fileID: 0}
 --- !u!1 &243367834
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d56bcfcc5665947a694c293e0b03f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_goals:
+  goals:
   - {fileID: 390348475}
   - {fileID: 1493858049}
   - {fileID: 1451459854}
@@ -676,8 +676,8 @@ MonoBehaviour:
   - {fileID: 347301540}
   - {fileID: 1762292859}
   - {fileID: 367747111}
-  m_player: {fileID: 1858447940}
-  m_angle: 45
+  player: {fileID: 1858447940}
+  angle: 45
   isStan: 0
 --- !u!135 &435606128
 SphereCollider:
@@ -1696,17 +1696,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d56bcfcc5665947a694c293e0b03f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_goals:
-  - {fileID: 1305905156}
-  - {fileID: 243367835}
-  - {fileID: 1185998987}
-  - {fileID: 2010369269}
-  - {fileID: 2092069970}
-  - {fileID: 1022902716}
-  - {fileID: 2115111721}
-  - {fileID: 42020207}
-  m_player: {fileID: 1858447940}
-  m_angle: 45
+  goals: []
+  player: {fileID: 0}
+  angle: 45
   isStan: 0
 --- !u!135 &1632556014
 SphereCollider:
@@ -2096,7 +2088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d56bcfcc5665947a694c293e0b03f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_goals:
+  goals:
   - {fileID: 1305905156}
   - {fileID: 243367835}
   - {fileID: 1185998987}
@@ -2105,8 +2097,8 @@ MonoBehaviour:
   - {fileID: 1022902716}
   - {fileID: 2115111721}
   - {fileID: 42020207}
-  m_player: {fileID: 1858447940}
-  m_angle: 45
+  player: {fileID: 1858447940}
+  angle: 45
   isStan: 0
 --- !u!135 &1787077165
 SphereCollider:
@@ -2232,9 +2224,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightObj: {fileID: 646006452}
+  m_gaugeController: {fileID: 268227617}
   angle: 45
   UseFlashInterval: 0
-  m_gaugeController: {fileID: 268227617}
 --- !u!114 &1858447934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2247,8 +2239,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfcc098a4db48694b8612d5d3ab9f201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MoveSpeed: 3.5
-  m_RotationSpeed: 3
+  MoveSpeed: 0.15
+  RotationSpeed: 0.15
 --- !u!136 &1858447935
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2422,6 +2414,7 @@ MonoBehaviour:
   - {fileID: 8235829311455642627, guid: fdf4653329ae17e45bef3f4c125bac31, type: 3}
   - {fileID: 826921807715561848, guid: 075bf7ba07509fd43bbbb55868d934b9, type: 3}
   - {fileID: 4307986567469248660, guid: 54ed94c1c830a62429257edec010f5a8, type: 3}
+  - {fileID: 5509588723037535175, guid: 729be2a528ca6034bac2de793d3ec2fa, type: 3}
 --- !u!4 &1903373552
 Transform:
   m_ObjectHideFlags: 0

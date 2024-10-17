@@ -6,7 +6,7 @@ using UnityEngine;
 public class HealBattery_Item : MonoBehaviour
 {
     //ライトの処理をアタッチ
-    public Player_Light m_Battery;
+    public Player_Light Battery;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -14,7 +14,7 @@ public class HealBattery_Item : MonoBehaviour
         {
 
             //回復の処理を呼び出す
-            m_Battery.HealBattery();
+            Battery.HealBattery();
 
             //消失
             Destroy(gameObject);

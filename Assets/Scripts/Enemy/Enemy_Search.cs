@@ -13,17 +13,15 @@ public class Enemy_Search : MonoBehaviour
     [SerializeField, Header("目的地")]
     private Transform[] goals = null;
 
+    // プレイヤーの位置を格納する変数
+    [SerializeField]
+    private Transform player;
+
     // ナビゲーションのコンポーネントを格納する変数
     private NavMeshAgent agent;
 
     // 配列のインデックス番号指定用変数
     private int destNum = 0;
-
-    // プレイヤーの位置を格納する変数
-    [SerializeField]
-    private Transform player;
-
-    private bool isChasePlayer = false;
 
     // 見える範囲
     [SerializeField, Header("見える範囲")]
@@ -33,9 +31,14 @@ public class Enemy_Search : MonoBehaviour
     private float stanTime = 2.0f;
     private float stanTimer = 0.0f;
 
+    // プレイヤーを追っているかを判定する変数
+    private bool isChasePlayer = false;
+
     // スタン状態かどうかのフラグ
     [HideInInspector]
     public bool isStan = false;
+
+    
 
     void Start()
     {
@@ -49,8 +52,14 @@ public class Enemy_Search : MonoBehaviour
 
     void Update()
     {
+        Move();
+    }
+
+    // 敵の移動用関数
+    void Move()
+    {
         // スタン状態だったら（プレイヤーからライトを食らったらtrueになる）
-        if(isStan)
+        if (isStan)
         {
             // 移動速度を0にする
             agent.speed = 0.0f;
@@ -58,7 +67,7 @@ public class Enemy_Search : MonoBehaviour
             // 時間を加算する
             stanTimer += Time.deltaTime;
             // タイマーがスタン時間を超えたら
-            if(stanTimer >= stanTime)
+            if (stanTimer >= stanTime)
             {
                 // スピードを元に戻す
                 agent.speed = 2.0f;
@@ -121,6 +130,7 @@ public class Enemy_Search : MonoBehaviour
 
             // プレイヤーを追わなくする
             isChasePlayer = false;
+
             // 速度を元に戻す
             agent.speed = 2.0f;
         }
