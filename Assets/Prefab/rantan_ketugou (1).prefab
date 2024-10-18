@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7492438563083252460, guid: f769f2bf1666bcb479e8d2544d2aaeaf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f18e872c59ec9640ad51b60db0c68bc, type: 2}
     - target: {fileID: -5677909988790299304, guid: f769f2bf1666bcb479e8d2544d2aaeaf, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.98
@@ -56,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0177e8a37310cd448b47c7deaf948c6d, type: 2}
+    - target: {fileID: 123401053121485730, guid: f769f2bf1666bcb479e8d2544d2aaeaf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f18e872c59ec9640ad51b60db0c68bc, type: 2}
     - target: {fileID: 919132149155446097, guid: f769f2bf1666bcb479e8d2544d2aaeaf, type: 3}
       propertyPath: m_Name
       value: rantan_ketugou (1)
@@ -88,6 +96,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7394b7289888f014b886eb36835ab221, type: 2}
+    - target: {fileID: 8566076673523469931, guid: f769f2bf1666bcb479e8d2544d2aaeaf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f18e872c59ec9640ad51b60db0c68bc, type: 2}
     - target: {fileID: 8834565851181212132, guid: f769f2bf1666bcb479e8d2544d2aaeaf, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
