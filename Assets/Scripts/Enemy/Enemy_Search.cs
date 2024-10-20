@@ -162,7 +162,7 @@ public class Enemy_Search : MonoBehaviour
                             // ƒvƒŒƒCƒ„[‚ğŒ©‚Â‚¯‚½‚ç‘‚­‚È‚é
                             _agent.speed = 3.5f;
                             isChasePlayer = true;
-                            Debug.Log("Œ©‚¦‚Ä‚¢‚é");
+                            //Debug.Log("Œ©‚¦‚Ä‚¢‚é");
                         }
                     }
                 }
