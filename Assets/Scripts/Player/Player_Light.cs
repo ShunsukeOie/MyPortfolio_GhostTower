@@ -156,7 +156,7 @@ public class Player_Light : MonoBehaviour
                 }
             }
             // 光量を上げる
-            m_lightscript.intensity = 10f;
+            m_lightscript.intensity = 100f;
 
             // 光量を下げていくコルーチンスタート
             StartCoroutine(Downintensity());
@@ -174,12 +174,12 @@ public class Player_Light : MonoBehaviour
     {
         // ループ回数(値を増やすと滑らかになる)
         int loopcount = 50;
-        // 下がりきるまでにかかる時間
-        float downtime = 0.7f;
+        // 下がるのにかかる時間
+        float downtime = 0.1f;
         // ウェイト時間算出
         float waittime = downtime / loopcount;
 
-        for (float intensity = 10f; intensity >= 2.73f; intensity -= 0.1f)
+        for (float intensity = 100f; intensity >= 10f; intensity -= 1f)
         {
             // 待ち時間
             yield return new WaitForSeconds(waittime);

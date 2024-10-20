@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockField : MonoBehaviour
+public class BlockField_3 : MonoBehaviour
 {
     // ƒuƒƒbƒN‚Ìí—Ş
     enum Block
