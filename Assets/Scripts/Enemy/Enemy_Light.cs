@@ -24,7 +24,7 @@ public class Enemy_Light : MonoBehaviour
        if(isLighting)
        {
             // 光量を上げる
-            _lightscript.intensity = 5f;
+            _lightscript.intensity = 50f;
 
             // 光量を下げていくコルーチンスタート
             StartCoroutine(Downintensity());
@@ -38,11 +38,11 @@ public class Enemy_Light : MonoBehaviour
         // ループ回数(値を増やすと滑らかになる)
         int loopcount = 50;
         // 下がりきるまでにかかる時間
-        float downtime = 0.7f;
+        float downtime = 0.1f;
         // ウェイト時間算出
         float waittime = downtime / loopcount;
 
-        for (float intensity = 5f; intensity >= 0.0f; intensity -= 0.1f)
+        for (float intensity = 50f; intensity >= 0.0f; intensity -= 0.1f)
         {
             // 待ち時間
             yield return new WaitForSeconds(waittime);

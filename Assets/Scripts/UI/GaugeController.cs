@@ -35,7 +35,6 @@ public class GaugeController : MonoBehaviour
     //ê‘êFÇ…Ç∑ÇÈ
     public void ChangeColor3()
     {
-        Debug.Log("3");
         gameObject.GetComponent<Image>().color = new Color(255.0f, 0.0f, 0.0f, 255.0f);
     }
 

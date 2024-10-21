@@ -38,8 +38,11 @@ public class Flash_Judge : MonoBehaviour
             // target_angleがm_angleに収まっているかどうか
             if (target_angle < angle)
             {
+                var targetPos = other.transform.position;
+                targetPos.y += 0.5f;
+
                 // レイを使用してEnemyに当たっているか判別する
-                if (Physics.Raycast(this.transform.position, posDelta, out RaycastHit hit))
+                if (Physics.Raycast(this.transform.position, targetPos, out RaycastHit hit))
                 {
                     Debug.Log(hit.collider.gameObject.name);
                     // レイに当たったのがエネミーだったら処理する
@@ -52,7 +55,7 @@ public class Flash_Judge : MonoBehaviour
                         Debug.Log("見えている");
                     }
                 }
-                Debug.DrawRay(transform.position, posDelta, Color.red);
+                Debug.DrawRay(transform.position, targetPos, Color.red);
             }
             else
             {

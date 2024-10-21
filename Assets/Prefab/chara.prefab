@@ -680,7 +680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 3
-  RotationSpeed: 3
+  RotationSpeed: 4
 --- !u!114 &8294045980304182816
 MonoBehaviour:
   m_ObjectHideFlags: 0
