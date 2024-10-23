@@ -13,12 +13,10 @@ public class FlickeringLight : MonoBehaviour
     //揺らめく対象のライト
     private Light _light = null;
 
-    //LightのRangeの最小と最高
-    [SerializeField]
+    [SerializeField, Header("LightのRangeの最小と最高")]
     private float _rangeMin = 1, _rangeMax = 2;
 
-    //ゆらめきの速さ(値が大きいほど早い)
-    [SerializeField]
+    [SerializeField, Header("ゆらめきの速さ(値が大きいほど早い)")]
     private float _rateOfChange = 1f;
 
     //=================================================================================

@@ -13,10 +13,6 @@ public class Enemy_Search : MonoBehaviour
     [SerializeField]
     private Transform player;
 
-    // 見える範囲
-    [SerializeField, Header("見える範囲")]
-    private float angle = 45.0f;
-
     // スタン時間計測用
     private float stanTime = 2.0f;
     private float stanTimer = 0.0f;

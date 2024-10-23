@@ -45,6 +45,8 @@ public class Player_lanthanum : MonoBehaviour
             // レイにヒットしたオブジェクトのタグがLanthanumだったら処理する
             if (hit.collider.gameObject.tag == "Lanthanum")
             {
+                Debug.Log("ある");
+                Debug.Log(hit.collider.gameObject.name);
                 //　目の前のランタンの情報を格納
                 LanthanumObj = hit.collider.gameObject;
 
@@ -78,8 +80,12 @@ public class Player_lanthanum : MonoBehaviour
             // ランタンオブジェがnullじゃなかったら処理する
             if(LanthanumObj != null)
             {
-                // ランタンオブジェの子オブジェクトを取得し、Lightスクリプトを有効化する
-                LanthanumObj.transform.Find("candle_").gameObject.GetComponent<Light>().enabled = true;
+                // ランタンオブジェの子オブジェクトを取得する
+                GameObject candle = LanthanumObj.transform.Find("candle_").gameObject;
+                // 点滅をやめる
+                candle.GetComponent<FlickeringLight>().enabled = false;
+                // 光の範囲を6に固定する
+                candle.GetComponent<Light>().range = 6;
                 // ランタンオブジェクトが反応しないようタグを切り替えておく
                 LanthanumObj.gameObject.tag = "none";
                 // UIを非表示にする

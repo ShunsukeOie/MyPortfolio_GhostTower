@@ -23,10 +23,6 @@ public class Player_Light : MonoBehaviour
     [SerializeField, Header("ゲージ操作クラス")]
     private GaugeController m_gaugeController;
 
-    // フラッシュの範囲
-    [SerializeField, Header("フラッシュの範囲")]
-    private float angle = 45.0f;
-
     // フラッシュのインターバル用の変数
     [SerializeField, Header("フラッシュのインターバル")]
     private float UseFlashInterval;
