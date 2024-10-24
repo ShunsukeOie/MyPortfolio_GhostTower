@@ -854,6 +854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d56bcfcc5665947a694c293e0b03f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   goals:
   - {fileID: 390348475}
   - {fileID: 1493858049}
@@ -863,8 +864,9 @@ MonoBehaviour:
   - {fileID: 347301540}
   - {fileID: 1762292859}
   - {fileID: 367747111}
-  player: {fileID: 0}
-  angle: 45
+  _agent: {fileID: 0}
+  destNum: 0
+  isChasePlayer: 0
   isStan: 0
 --- !u!135 &435606128
 SphereCollider:
@@ -1075,7 +1077,6 @@ MonoBehaviour:
   LightObj: {fileID: 28823949}
   JudgeObje: {fileID: 133028087}
   m_gaugeController: {fileID: 268227617}
-  angle: 45
   UseFlashInterval: 5
   canStopEnemy: 0
 --- !u!114 &677708145
@@ -1930,6 +1931,81 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae7d487ca9d6dbb499656dc0255bad1b, type: 3}
+--- !u!1 &1523359771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1523359772}
+  - component: {fileID: 1523359774}
+  - component: {fileID: 1523359773}
+  m_Layer: 5
+  m_Name: fade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1523359772
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523359771}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1642409262}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1523359773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523359771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: beb43986ba175414aa95e37fc876ba60, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1523359774
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523359771}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1629690348
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2076,9 +2152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d56bcfcc5665947a694c293e0b03f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goals: []
   player: {fileID: 0}
-  angle: 45
+  goals: []
+  _agent: {fileID: 0}
+  destNum: 0
+  isChasePlayer: 0
   isStan: 0
 --- !u!135 &1632556014
 SphereCollider:
@@ -2285,6 +2363,7 @@ RectTransform:
   m_Children:
   - {fileID: 1356454406}
   - {fileID: 268227615}
+  - {fileID: 1523359772}
   - {fileID: 1191835635}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2548,6 +2627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d56bcfcc5665947a694c293e0b03f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   goals:
   - {fileID: 1305905156}
   - {fileID: 243367835}
@@ -2557,8 +2637,9 @@ MonoBehaviour:
   - {fileID: 1022902716}
   - {fileID: 2115111721}
   - {fileID: 42020207}
-  player: {fileID: 0}
-  angle: 45
+  _agent: {fileID: 0}
+  destNum: 0
+  isChasePlayer: 0
   isStan: 0
 --- !u!135 &1787077165
 SphereCollider:
