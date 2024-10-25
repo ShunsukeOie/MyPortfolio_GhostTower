@@ -323,6 +323,10 @@ PrefabInstance:
       propertyPath: main_camera
       value: 
       objectReference: {fileID: 1412297255}
+    - target: {fileID: 4273496101890313665, guid: ae7d487ca9d6dbb499656dc0255bad1b, type: 3}
+      propertyPath: player_move
+      value: 
+      objectReference: {fileID: 448864043}
     - target: {fileID: 4641976532838757654, guid: ae7d487ca9d6dbb499656dc0255bad1b, type: 3}
       propertyPath: m_Name
       value: Setting
