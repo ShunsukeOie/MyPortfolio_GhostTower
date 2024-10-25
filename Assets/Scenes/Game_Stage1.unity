@@ -393,7 +393,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2597858507649278542, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
       propertyPath: RotationSpeed
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6421859734346409240, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
       propertyPath: UIImage
