@@ -74,6 +74,8 @@ public class Enemy_Search : MonoBehaviour
                 stanTimer = 0.0f;
                 // フラグを降ろす
                 isStan = false;
+                // プレイヤーを追わなくする
+                isChasePlayer = false;
             }
         }
         // スタン状態じゃない

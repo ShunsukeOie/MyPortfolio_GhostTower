@@ -32,13 +32,21 @@ public class Player_Light : MonoBehaviour
     private float m_maxBattery = 100;     //最大電力
     private float m_currentBattery = 100; //現在の電力
 
+    [SerializeField, Header("光の点滅用カーブ")]
+    AnimationCurve _curve;
+    [SerializeField, Header("光の点滅スピード")]
+    private float blinkingspeed;
+    // 最初の光の値
+    private float startintensity;
+    // 光の点滅用タイマー
+    float blinkingTimer = 0f;
+
     // ライトが点灯しているか判定するフラグ
     private bool isLighting;
 
     // エネミーがスタンできる状態かを判定するフラグ
     [HideInInspector]
     public bool canStopEnemy = false;
-    
 
     void Start()
     {
@@ -50,6 +58,8 @@ public class Player_Light : MonoBehaviour
         isLighting = false;
         // ライトオブジェクトを非アクティブにしておく
         LightObj.SetActive(false);
+        // 最初の光の値を取得
+        startintensity = m_lightscript.intensity;
 
         //ゲージを初期値で更新
         m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
@@ -101,6 +111,12 @@ public class Player_Light : MonoBehaviour
             //赤
             m_gaugeController.ChangeColor3();
 
+        }
+
+        if(m_currentBattery <= 50)
+        {
+            blinkingTimer += Time.deltaTime;
+            m_lightscript.intensity = startintensity * _curve.Evaluate(blinkingTimer * blinkingspeed);
         }
     }
 

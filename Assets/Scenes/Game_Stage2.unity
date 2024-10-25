@@ -1203,7 +1203,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2130536254238284162, guid: 50c4bb1990bc78c4b9d9e5a58f4599f5, type: 3}
       propertyPath: countdown
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6962436214213528383, guid: 50c4bb1990bc78c4b9d9e5a58f4599f5, type: 3}
       propertyPath: m_LocalPosition.x

@@ -116,6 +116,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4518449652499681544, guid: 813af1bd0c5190041b95e35abbfce20c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c4ace4acd1eab7145aff27daadaa6447, type: 2}
+    - target: {fileID: -3843632356070208212, guid: 813af1bd0c5190041b95e35abbfce20c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c4ace4acd1eab7145aff27daadaa6447, type: 2}
+    - target: {fileID: -264430861247414160, guid: 813af1bd0c5190041b95e35abbfce20c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c4ace4acd1eab7145aff27daadaa6447, type: 2}
     - target: {fileID: 919132149155446097, guid: 813af1bd0c5190041b95e35abbfce20c, type: 3}
       propertyPath: m_Name
       value: new teresa
