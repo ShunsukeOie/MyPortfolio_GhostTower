@@ -154,17 +154,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 336211462}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &199528306 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8294045980304182816, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
-  m_PrefabInstance: {fileID: 462693412}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41da32c5bbf1f8243959171819068d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &301080744
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,6 +380,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2035965405064158178, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
+      propertyPath: m_gaugeController
+      value: 
+      objectReference: {fileID: 640109348}
     - target: {fileID: 2597858507649278542, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
       propertyPath: RotationSpeed
       value: 4
@@ -417,6 +410,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 541874163352329819, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
   m_PrefabInstance: {fileID: 462693412}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &462693416 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2035965405064158178, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
+  m_PrefabInstance: {fileID: 462693412}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41da32c5bbf1f8243959171819068d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &508654600
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1353,7 +1357,7 @@ PrefabInstance:
     - target: {fileID: 5185594583856110276, guid: 074044fb0652dc141a7c565879c70cdf, type: 3}
       propertyPath: Battery
       value: 
-      objectReference: {fileID: 199528306}
+      objectReference: {fileID: 462693416}
     - target: {fileID: 8164699833124180641, guid: 074044fb0652dc141a7c565879c70cdf, type: 3}
       propertyPath: m_Name
       value: denti

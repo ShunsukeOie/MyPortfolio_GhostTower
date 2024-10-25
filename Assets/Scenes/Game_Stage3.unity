@@ -2223,6 +2223,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: chara
       objectReference: {fileID: 0}
+    - target: {fileID: 2035965405064158178, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
+      propertyPath: m_gaugeController
+      value: 
+      objectReference: {fileID: 131868162}
     - target: {fileID: 6421859734346409240, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
       propertyPath: UIImage
       value: 
@@ -2974,7 +2978,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
 --- !u!114 &7948983524476454515 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8294045980304182816, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2035965405064158178, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
   m_PrefabInstance: {fileID: 7948983524476454514}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
