@@ -11686,6 +11686,7 @@ GameObject:
   - component: {fileID: 2041651748}
   - component: {fileID: 2041651747}
   - component: {fileID: 2041651746}
+  - component: {fileID: 2041651749}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -11778,6 +11779,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &2041651749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041651744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239a30a9e8b565b48b974d5985d9b182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ExplanationImage1: {fileID: 467120702}
+  _ExplanationImage2: {fileID: 2067422345}
 --- !u!1 &2067422344
 GameObject:
   m_ObjectHideFlags: 0
@@ -11862,9 +11877,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4125174996525522290, guid: 3946c8b7fac04114e92105ee246a6be1, type: 3}
+      propertyPath: m_Interval
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4125174996525522290, guid: 3946c8b7fac04114e92105ee246a6be1, type: 3}
       propertyPath: m_Operation
       value: 
       objectReference: {fileID: 467120700}
+    - target: {fileID: 4125174996525522290, guid: 3946c8b7fac04114e92105ee246a6be1, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 2041651749}
     - target: {fileID: 4125174996525522290, guid: 3946c8b7fac04114e92105ee246a6be1, type: 3}
       propertyPath: m_sSceneName
       value: StageSelect
