@@ -18,6 +18,9 @@ public class SceneLoad : MonoBehaviour
 
     //連打防止用の入力制限タイマー
     float m_Timer = 1.0f;
+    //ボタン入力インターバル
+    [SerializeField, Header("ボタン入力インターバル")]
+    private float m_Interval;
 
     private void Start()
     {
@@ -40,7 +43,7 @@ public class SceneLoad : MonoBehaviour
             ++m_count;
 
             //タイマーリセット
-            m_Timer = 1.0f;
+            m_Timer = m_Interval;
         }
         //遊び方を表示
         else if(Input.anyKeyDown && m_count == 1 && m_Timer <= 0.0f)
@@ -49,7 +52,7 @@ public class SceneLoad : MonoBehaviour
             ++m_count;
 
             //タイマーリセット
-            m_Timer = 1.0f;
+            m_Timer = m_Interval;
         }
         //セレクト画面に遷移
         else if(Input.anyKeyDown && m_Timer <= 0.0f)
