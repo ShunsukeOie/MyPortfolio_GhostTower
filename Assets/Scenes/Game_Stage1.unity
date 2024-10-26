@@ -860,6 +860,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 854438476122111740, guid: 50c4bb1990bc78c4b9d9e5a58f4599f5, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: dc9c3059d68e51f4bbe0ad63b1c683bd, type: 3}
     - target: {fileID: 2130536254238284162, guid: 50c4bb1990bc78c4b9d9e5a58f4599f5, type: 3}
       propertyPath: countdown
       value: 60

@@ -263,7 +263,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Setting
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4273496101890313665, guid: ae7d487ca9d6dbb499656dc0255bad1b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -6121,7 +6122,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -422, y: -293}
-  m_SizeDelta: {x: 800, y: 200}
+  m_SizeDelta: {x: 870, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &937485549
 MonoBehaviour:
@@ -6190,7 +6191,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: dc9c3059d68e51f4bbe0ad63b1c683bd, type: 3}
     m_FontSize: 100
     m_FontStyle: 0
     m_BestFit: 0
