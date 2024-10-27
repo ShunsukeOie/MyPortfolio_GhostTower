@@ -5,6 +5,12 @@ public class SceneLoadButton : MonoBehaviour
 {
     public void RoadScene(string _sSceneName = null)
     {
+        // SEManegerを取得
+        SEManeger seManeger = SEManeger.Instance;
+        // SEManegerから音を流す
+        seManeger.SettingPlaySE();
+
+
         // 名前が入ってないならスキップ
         if (_sSceneName == null) { return; }
 

@@ -22,9 +22,18 @@ public class SceneLoad : MonoBehaviour
     [SerializeField, Header("ボタン入力インターバル")]
     private float m_Interval;
 
+    // 音格納用（効果音）
+    [SerializeField]
+    private AudioClip _audio;
+
+    // 音を鳴らすために必要なもの（スピーカー）
+    [SerializeField]
+    private AudioSource _audioSource;
+
     private void Start()
     {
-        
+        // コンポーネントを取得
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -39,31 +48,63 @@ public class SceneLoad : MonoBehaviour
         // ボタンを押したら操作説明を表示
         if (Input.anyKeyDown && m_count == 0)
         {
+            // Audio
+            _audioSource.clip = _audio;
+
             StartCoroutine(m_Controller.ChangeColor1());
+
+            // 1
             ++m_count;
 
             //タイマーリセット
             m_Timer = m_Interval;
+
+            // 再生していないとき
+            if (!_audioSource.isPlaying)
+            {
+                // 一度だけ効果音を鳴らす
+                _audioSource.PlayOneShot(_audioSource.clip);
+            }
         }
+
         //遊び方を表示
         else if(Input.anyKeyDown && m_count == 1 && m_Timer <= 0.0f)
         {
             StartCoroutine(m_Controller.ChangeColor2());
+
+            // 2
             ++m_count;
 
             //タイマーリセット
             m_Timer = m_Interval;
+
+            // 再生していないとき
+            if (!_audioSource.isPlaying)
+            {
+                // 一度だけ効果音を鳴らす
+                _audioSource.PlayOneShot(_audioSource.clip);
+            }
         }
+
         //セレクト画面に遷移
         else if(Input.anyKeyDown && m_Timer <= 0.0f)
         {
-            // 名前が入ってないならスキップ
-            if (m_sSceneName == null) { return; }
+            // 3
+            ++m_count;
 
+            // 再生していないとき
+            if (!_audioSource.isPlaying)
+            {
+                // 一度だけ効果音を鳴らす
+                _audioSource.PlayOneShot(_audioSource.clip);
+            }
+        }
+
+        // セレクト画面の時かつ音が鳴っていないとき
+        if(m_count == 3 && !_audioSource.isPlaying)
+        {
             // 指定のシーンをロードする
             SceneManager.LoadScene(m_sSceneName);
         }
-
-
     }
 }
