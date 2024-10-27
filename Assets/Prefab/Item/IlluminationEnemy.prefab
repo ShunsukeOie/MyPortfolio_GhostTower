@@ -252,7 +252,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4c422dba0c5fd2d47b202af51697fd76, type: 2}
     - target: {fileID: 919132149155446097, guid: c67335250fd71ed40a7e5d79bc2e6fcf, type: 3}
       propertyPath: m_Name
-      value: bin
+      value: IlluminationEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c67335250fd71ed40a7e5d79bc2e6fcf, type: 3}
+      propertyPath: m_TagString
+      value: Item
       objectReference: {fileID: 0}
     - target: {fileID: 3566390031902043909, guid: c67335250fd71ed40a7e5d79bc2e6fcf, type: 3}
       propertyPath: m_Materials.Array.data[0]

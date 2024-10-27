@@ -22,8 +22,19 @@ public class Player_lanthanum : MonoBehaviour
     // アイテムが目の前にあるか
     private bool IsItem = false;
 
-    [Header("どのレイヤーの判定を取るか")]
-    public LayerMask layerMask;
+    [SerializeField, Header("どのレイヤーの判定を取るか")]
+    private LayerMask layerMask;
+
+    [SerializeField, Header("AudioMangerオブジェクト")]
+    private GameObject _audiomng;
+    // AudioManagerのスクリプト格納用
+    private AudioManager _audioscript;
+
+    private void Start()
+    {
+        // コンポーネントを取得
+        _audioscript = _audiomng.GetComponent<AudioManager>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -45,8 +56,6 @@ public class Player_lanthanum : MonoBehaviour
             // レイにヒットしたオブジェクトのタグがLanthanumだったら処理する
             if (hit.collider.gameObject.tag == "Lanthanum")
             {
-                Debug.Log("ある");
-                Debug.Log(hit.collider.gameObject.name);
                 //　目の前のランタンの情報を格納
                 LanthanumObj = hit.collider.gameObject;
 
@@ -90,6 +99,9 @@ public class Player_lanthanum : MonoBehaviour
                 LanthanumObj.gameObject.tag = "none";
                 // UIを非表示にする
                 UIImage.SetActive(false);
+
+                // ランタン点灯の音を流す
+                _audioscript.LanthanumSE();
             }
         }
     }

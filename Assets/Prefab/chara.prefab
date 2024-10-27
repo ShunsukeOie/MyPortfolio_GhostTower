@@ -964,6 +964,7 @@ MonoBehaviour:
     m_PostInfinity: 1
     m_RotationOrder: 4
   blinkingspeed: 0.3
+  _audiomng: {fileID: 0}
   canStopEnemy: 0
 --- !u!114 &6421859734346409240
 MonoBehaviour:
@@ -983,6 +984,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  _audiomng: {fileID: 0}
 --- !u!114 &5068408054424581153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -995,6 +997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fba38859f31bfd41b8b38ac02f000c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audiomng: {fileID: 0}
 --- !u!114 &7466114747065860764
 MonoBehaviour:
   m_ObjectHideFlags: 0

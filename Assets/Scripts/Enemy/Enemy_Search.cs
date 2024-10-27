@@ -76,6 +76,10 @@ public class Enemy_Search : MonoBehaviour
                 isStan = false;
                 // プレイヤーを追わなくする
                 isChasePlayer = false;
+
+                // デフォルトの音に切り替える為、AudioManegerのフラグを変える
+                AudioManager mng = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+                mng.ChangeAudio = false;
             }
         }
         // スタン状態じゃない
@@ -129,6 +133,10 @@ public class Enemy_Search : MonoBehaviour
 
             // プレイヤーを追わなくする
             isChasePlayer = false;
+
+            // デフォルトの音に切り替える為、AudioManegerのフラグを変える
+            AudioManager mng = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+            mng.ChangeAudio = false;
 
             // 速度を元に戻す
             _agent.speed = 2.0f;

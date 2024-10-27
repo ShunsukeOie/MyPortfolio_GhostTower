@@ -44,6 +44,16 @@ public class Player_Light : MonoBehaviour
     // ライトが点灯しているか判定するフラグ
     private bool isLighting;
 
+
+    [SerializeField, Header("AudioMangerオブジェクト")]
+    private GameObject _audiomng;
+    // AudioManagerのスクリプト格納用
+    private AudioManager _audioscript;
+
+    //--------------------------------------------
+    // public
+    //--------------------------------------------
+
     // エネミーがスタンできる状態かを判定するフラグ
     [HideInInspector]
     public bool canStopEnemy = false;
@@ -53,6 +63,7 @@ public class Player_Light : MonoBehaviour
         // スクリプトを取得する
         m_lightscript = LightObj.GetComponent<Light>();
         _Judge = JudgeObje.GetComponent<Flash_Judge>();
+        _audioscript = _audiomng.GetComponent<AudioManager>();
 
         // フラグを初期化
         isLighting = false;
@@ -74,6 +85,9 @@ public class Player_Light : MonoBehaviour
         {
             // ライトオブジェクトを非アクティブにする
             LightObj.SetActive(false);
+
+            // ライト消灯の音を鳴らす
+            _audioscript.LightUpSE();
         }
 
         // ライトを点灯する
@@ -131,6 +145,8 @@ public class Player_Light : MonoBehaviour
             isLighting = true;
             // ライトオブジェクトをアクティブにする
             LightObj.SetActive(true);
+            // ライト点灯の音を鳴らす
+            _audioscript.LightUpSE();
 
         }
 
@@ -141,7 +157,8 @@ public class Player_Light : MonoBehaviour
             isLighting = false;
             // ライトオブジェクトを非アクティブにする
             LightObj.SetActive(false);
-
+            // ライト消灯の音を鳴らす
+            _audioscript.LightUpSE();
         }
     }
 
@@ -178,6 +195,9 @@ public class Player_Light : MonoBehaviour
 
             //バッテリーを減少させる
             BatteryFlash();
+
+            // フラッシュの音を鳴らす
+            _audioscript.FlashSE();
         }
     }
 

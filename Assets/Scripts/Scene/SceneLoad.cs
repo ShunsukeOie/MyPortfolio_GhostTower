@@ -27,7 +27,6 @@ public class SceneLoad : MonoBehaviour
     private AudioClip _audio;
 
     // 音を鳴らすために必要なもの（スピーカー）
-    [SerializeField]
     private AudioSource _audioSource;
 
     private void Start()
@@ -68,7 +67,7 @@ public class SceneLoad : MonoBehaviour
         }
 
         //遊び方を表示
-        else if(Input.anyKeyDown && m_count == 1 && m_Timer <= 0.0f)
+        else if(Input.anyKeyDown && m_count == 1 && m_Timer <= 0.0f && !_audioSource.isPlaying)
         {
             StartCoroutine(m_Controller.ChangeColor2());
 
@@ -87,7 +86,7 @@ public class SceneLoad : MonoBehaviour
         }
 
         //セレクト画面に遷移
-        else if(Input.anyKeyDown && m_Timer <= 0.0f)
+        else if(Input.anyKeyDown && m_count == 2 && m_Timer <= 0.0f && !_audioSource.isPlaying)
         {
             // 3
             ++m_count;
