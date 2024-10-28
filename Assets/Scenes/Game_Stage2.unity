@@ -905,6 +905,10 @@ PrefabInstance:
       propertyPath: _audiomng
       value: 
       objectReference: {fileID: 1277583193}
+    - target: {fileID: 7466114747065860764, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8294045980304182816, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
       propertyPath: m_gaugeController
       value: 
