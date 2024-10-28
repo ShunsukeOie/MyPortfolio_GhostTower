@@ -18,7 +18,7 @@ public class Switch_Camera : MonoBehaviour
         //一人称カメラを最初はオフにする
         sub_camera.enabled = false;
 
-        player_move = GameObject.Find("chara");
+        player_move = GameObject.Find("Player");
 
         //初期操作の設定
         player_move.GetComponent<Player_Move>().enabled = true;
