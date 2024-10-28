@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PerlinNoiseGenerator : MonoBehaviour
+public class PerlinNoiseGenerator 
 {
     //パーリンノイズのシード
     private float _seed = 0;
