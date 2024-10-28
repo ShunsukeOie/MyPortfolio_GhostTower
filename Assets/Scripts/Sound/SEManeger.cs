@@ -17,6 +17,7 @@ public class SEManeger : MonoBehaviour
         get; private set;
     }
 
+    // スタートよりも優先敵に処理する
     private void Awake()
     {
         // SEManegerが既にある時はDestroyする

@@ -159,6 +159,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6822679274411155136, guid: 6bdc55e038b1f764aa04ea4749bcc361, type: 3}
   m_PrefabInstance: {fileID: 7044172480827123216}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &161488080 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6189307128449205370, guid: 6bdc55e038b1f764aa04ea4749bcc361, type: 3}
+  m_PrefabInstance: {fileID: 7044172480827123216}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &301080744
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,11 +500,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
---- !u!4 &462693413 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 541874163352329819, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
-  m_PrefabInstance: {fileID: 462693412}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &462693414 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 6944270976118920652, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
@@ -1270,7 +1270,7 @@ PrefabInstance:
     - target: {fileID: 6036840857523403522, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 462693413}
+      objectReference: {fileID: 161488080}
     - target: {fileID: 6036840857523403522, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: goals.Array.data[0]
       value: 

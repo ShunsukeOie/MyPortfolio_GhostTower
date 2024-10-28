@@ -48,7 +48,7 @@ public class Enemy_Judge : MonoBehaviour
                             _search._agent.speed = 3.0f;
                             _search.isChasePlayer = true;
 
-                            // 敵が追っているとき用の音に切り替える為、AudioManegerのフラグを変える
+                            // 敵が追っているとき用の音に切り替える為、AudioManagerのフラグを変える
                             AudioManager mng = GameObject.Find("AudioManager").GetComponent<AudioManager>();
                             mng.ChangeAudio = true;
                         }
@@ -62,7 +62,7 @@ public class Enemy_Judge : MonoBehaviour
                     // 敵をプレイヤーを追う前の目的地に向かって動かす
                     _search._agent.destination = _search.goals[_search.destNum].position;
 
-                    // デフォルトの音に切り替える為、AudioManegerのフラグを変える
+                    // デフォルトの音に切り替える為、AudioManagerのフラグを変える
                     AudioManager mng = GameObject.Find("AudioManager").GetComponent<AudioManager>();
                     mng.ChangeAudio = false;
                 }

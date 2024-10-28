@@ -57,7 +57,7 @@ public class Enemy_Search : MonoBehaviour
     // 敵の移動用関数
     void Move()
     {
-        // スタン状態だったら（プレイヤーからライトを食らったらtrueになる）
+        // スタン状態だったら（プレイヤーからフラッシュを食らったらtrueになる）
         if (isStan)
         {
             // 移動速度を0にする
@@ -77,7 +77,7 @@ public class Enemy_Search : MonoBehaviour
                 // プレイヤーを追わなくする
                 isChasePlayer = false;
 
-                // デフォルトの音に切り替える為、AudioManegerのフラグを変える
+                // デフォルトの音に切り替える為、AudioManagerのフラグを変える
                 AudioManager mng = GameObject.Find("AudioManager").GetComponent<AudioManager>();
                 mng.ChangeAudio = false;
             }
@@ -134,7 +134,7 @@ public class Enemy_Search : MonoBehaviour
             // プレイヤーを追わなくする
             isChasePlayer = false;
 
-            // デフォルトの音に切り替える為、AudioManegerのフラグを変える
+            // デフォルトの音に切り替える為、AudioManagerのフラグを変える
             AudioManager mng = GameObject.Find("AudioManager").GetComponent<AudioManager>();
             mng.ChangeAudio = false;
 

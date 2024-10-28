@@ -915,7 +915,7 @@ PrefabInstance:
     - target: {fileID: 6036840857523403522, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 7948983524476454516}
+      objectReference: {fileID: 1031814150}
     - target: {fileID: 6036840857523403522, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: goals.Array.data[0]
       value: 
@@ -1146,6 +1146,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41da32c5bbf1f8243959171819068d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1031814150 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6189307128449205370, guid: 6bdc55e038b1f764aa04ea4749bcc361, type: 3}
+  m_PrefabInstance: {fileID: 1031814148}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1065868557 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5133590568161911165, guid: 729be2a528ca6034bac2de793d3ec2fa, type: 3}
@@ -2279,7 +2284,7 @@ PrefabInstance:
     - target: {fileID: 6036840857523403522, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 7948983524476454516}
+      objectReference: {fileID: 1031814150}
     - target: {fileID: 6036840857523403522, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: goals.Array.data[0]
       value: 
@@ -3198,11 +3203,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
---- !u!4 &7948983524476454516 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 541874163352329819, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
-  m_PrefabInstance: {fileID: 7948983524476454514}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &7948983524476454517 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 6944270976118920652, guid: abfa8d0f13313e6439e3d5e760c810bb, type: 3}
