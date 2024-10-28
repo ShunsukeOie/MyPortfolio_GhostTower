@@ -1781,6 +1781,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3624136265874336676, guid: b25538cbe23646647bf3fc2cea98d8ed, type: 3}
+      propertyPath: _se.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3624136265874336676, guid: b25538cbe23646647bf3fc2cea98d8ed, type: 3}
+      propertyPath: _se.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: d97854a65c9d6d446acf3f7486f385ee, type: 3}
+    - target: {fileID: 3624136265874336676, guid: b25538cbe23646647bf3fc2cea98d8ed, type: 3}
+      propertyPath: _se.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: d8ac4ccdd9638644f87a6280d15d258d, type: 3}
+    - target: {fileID: 3624136265874336676, guid: b25538cbe23646647bf3fc2cea98d8ed, type: 3}
+      propertyPath: _se.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: dd30c0a2db34d264f98f3a59974e6e36, type: 3}
+    - target: {fileID: 3624136265874336676, guid: b25538cbe23646647bf3fc2cea98d8ed, type: 3}
+      propertyPath: _se.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 327f095d5cc3dce4ba9dab3a15cfc883, type: 3}
+    - target: {fileID: 3624136265874336676, guid: b25538cbe23646647bf3fc2cea98d8ed, type: 3}
+      propertyPath: _se.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 435726e5ae43eee48a254e73c3132dd4, type: 3}
+    - target: {fileID: 3624136265874336676, guid: b25538cbe23646647bf3fc2cea98d8ed, type: 3}
+      propertyPath: _se.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 035b48e055821e64db0703b21f023b3c, type: 3}
     - target: {fileID: 5773202597710261667, guid: b25538cbe23646647bf3fc2cea98d8ed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3226,10 +3254,10 @@ SceneRoots:
   - {fileID: 7948983524476454514}
   - {fileID: 1356704891}
   - {fileID: 551040308}
-  - {fileID: 1687904441}
   - {fileID: 1635829324}
   - {fileID: 3516930768140375586}
   - {fileID: 762962573}
   - {fileID: 983633298}
   - {fileID: 71072557}
   - {fileID: 1031814148}
+  - {fileID: 1687904441}
