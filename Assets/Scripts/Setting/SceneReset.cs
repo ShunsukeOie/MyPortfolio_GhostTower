@@ -12,5 +12,10 @@ public class SceneReset : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            SceneController.BackToSelectScene();
+        }
     }
 }

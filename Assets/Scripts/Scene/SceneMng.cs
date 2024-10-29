@@ -29,6 +29,10 @@ public static class SceneController
         SceneManager.LoadScene(sceneName);
     }
 
+    public static void BackToSelectScene()
+    {
+        SceneManager.LoadScene("StageSelect");
+    }
 
     // どのステージをクリアしたかを判定し、指定のシーンをロードする。
     // ゴールオブジェクトに触れた時に、このメソッドを実行する。
