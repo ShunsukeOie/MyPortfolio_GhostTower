@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main_camera: {fileID: 1412297255}
-  sub_camera: {fileID: 462693414}
+  sub_camera: {fileID: 7044172480827123222}
   player_move: {fileID: 161488072}
 --- !u!1 &448864043 stripped
 GameObject:
@@ -2019,6 +2019,11 @@ GameObject:
 --- !u!1 &7044172480827123219 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5193058122108216276, guid: 6bdc55e038b1f764aa04ea4749bcc361, type: 3}
+  m_PrefabInstance: {fileID: 7044172480827123216}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &7044172480827123222 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 9086955807104687243, guid: 6bdc55e038b1f764aa04ea4749bcc361, type: 3}
   m_PrefabInstance: {fileID: 7044172480827123216}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807

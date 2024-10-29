@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main_camera: {fileID: 1849252755}
-  sub_camera: {fileID: 7948983524476454517}
+  sub_camera: {fileID: 1750081747}
   player_move: {fileID: 1820938331}
 --- !u!1001 &983633298
 PrefabInstance:
@@ -2100,6 +2100,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0ee6f4a2719f7c44966a991434efd42, type: 3}
+--- !u!20 &1750081747 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 9086955807104687243, guid: 6bdc55e038b1f764aa04ea4749bcc361, type: 3}
+  m_PrefabInstance: {fileID: 1031814148}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1756250316
 PrefabInstance:
   m_ObjectHideFlags: 0
