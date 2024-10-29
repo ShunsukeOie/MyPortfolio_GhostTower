@@ -119,10 +119,10 @@ public class Enemy_Search : MonoBehaviour
         _agent.destination = goals[destNum].position;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         // プレイヤーに触れたら処理する
-        if(collision.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             // 元の位置に戻る
             transform.position = startPos;

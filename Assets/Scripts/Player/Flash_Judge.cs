@@ -41,7 +41,6 @@ public class Flash_Judge : MonoBehaviour
                 // レイを使用してEnemyに当たっているか判別する
                 if (Physics.Raycast(this.transform.position, posDelta, out RaycastHit hit))
                 {
-                    Debug.Log(hit.collider.gameObject.name);
                     // レイに当たったのがエネミーだったら処理する
                     if (hit.collider == other)
                     {
@@ -49,7 +48,6 @@ public class Flash_Judge : MonoBehaviour
                         _esearch = other.GetComponent<Enemy_Search>();
                         // プレイヤーのスクリプトにアクセスし、フラグを上げる
                         _plyLight.canStopEnemy = true;
-                        Debug.Log("見えている");
                     }
                 }
                 Debug.DrawRay(transform.position, posDelta, Color.red);
