@@ -152,13 +152,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1042529878}
-  - {fileID: 1537471420}
-  - {fileID: 56819665}
-  - {fileID: 1274836330}
-  - {fileID: 37550890}
-  - {fileID: 1412531475}
   - {fileID: 1052695812}
+  - {fileID: 1412531475}
+  - {fileID: 37550890}
+  - {fileID: 1274836330}
+  - {fileID: 56819665}
+  - {fileID: 1537471420}
+  - {fileID: 1042529878}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &31644692
@@ -202,7 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 37550890}
   m_Layer: 0
-  m_Name: 6
+  m_Name: 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -370,7 +370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 56819665}
   m_Layer: 0
-  m_Name: 4
+  m_Name: 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1367,7 +1367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1042529878}
   m_Layer: 0
-  m_Name: 2
+  m_Name: 8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1398,7 +1398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1052695812}
   m_Layer: 0
-  m_Name: 8
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1689,15 +1689,15 @@ PrefabInstance:
     - target: {fileID: 6036840857523403522, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: goals.Array.data[1]
       value: 
-      objectReference: {fileID: 1042529878}
+      objectReference: {fileID: 1052695812}
     - target: {fileID: 6036840857523403522, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: goals.Array.data[2]
       value: 
-      objectReference: {fileID: 1537471420}
+      objectReference: {fileID: 1412531475}
     - target: {fileID: 6036840857523403522, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: goals.Array.data[3]
       value: 
-      objectReference: {fileID: 56819665}
+      objectReference: {fileID: 37550890}
     - target: {fileID: 6036840857523403522, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: goals.Array.data[4]
       value: 
@@ -1705,15 +1705,15 @@ PrefabInstance:
     - target: {fileID: 6036840857523403522, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: goals.Array.data[5]
       value: 
-      objectReference: {fileID: 37550890}
+      objectReference: {fileID: 56819665}
     - target: {fileID: 6036840857523403522, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: goals.Array.data[6]
       value: 
-      objectReference: {fileID: 1412531475}
+      objectReference: {fileID: 1537471420}
     - target: {fileID: 6036840857523403522, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: goals.Array.data[7]
       value: 
-      objectReference: {fileID: 1052695812}
+      objectReference: {fileID: 1042529878}
     - target: {fileID: 8512660587561469387, guid: 273c4022065ffbf45a00d6e8751babca, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12
@@ -1773,7 +1773,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1412531475}
   m_Layer: 0
-  m_Name: 7
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1892,7 +1892,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1537471420}
   m_Layer: 0
-  m_Name: 3
+  m_Name: 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
