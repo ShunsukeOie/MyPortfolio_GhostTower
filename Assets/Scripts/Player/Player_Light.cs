@@ -2,22 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class Player_Light : MonoBehaviour
 {
     // ライトオブジェクト
     [SerializeField, Header("ライトオブジェクト")]
-    private GameObject LightObj;
+    private GameObject m_lightObj;
     // ライトのスクリプトを格納する変数
-    private Light m_lightscript;
+    private Light m_lightScript;
 
     // フラッシュを判定するオブジェクト
     //（別にすることで敵の索敵範囲との干渉をなくす）
     [SerializeField, Header("フラッシュ判定オブジェクト")]
-    private GameObject JudgeObje;
+    private GameObject m_judgeObj;
     // フラッシュ判定用のスクリプト格納用
-    private Flash_Judge _Judge;
+    private Flash_Judge m_JudgeScript;
 
     //ゲージ操作クラスの取得用変数
     [SerializeField, Header("ゲージ操作クラス")]
@@ -25,52 +26,38 @@ public class Player_Light : MonoBehaviour
 
     // フラッシュのインターバル用の変数
     [SerializeField, Header("フラッシュのインターバル")]
-    private float UseFlashInterval;
-    private float FlashCoolTimer;
+    private float m_useFlashInterval;
+    private float m_flashCoolTimer;
 
     //バッテリー用
     private float m_maxBattery = 100;     //最大電力
     private float m_currentBattery = 100; //現在の電力
 
     [SerializeField, Header("光の点滅用カーブ")]
-    AnimationCurve _curve;
+    AnimationCurve m_curve;
     [SerializeField, Header("光の点滅スピード")]
-    private float blinkingspeed;
+    private float m_blinkingSpeed;
     // 最初の光の値
-    private float startintensity;
+    private float m_startIntensity;
     // 光の点滅用タイマー
-    float blinkingTimer = 0f;
+    float m_blinkingTimer = 0f;
 
     // ライトが点灯しているか判定するフラグ
-    private bool isLighting;
-
-
-    [SerializeField, Header("AudioMangerオブジェクト")]
-    private GameObject _audiomng;
-    // AudioManagerのスクリプト格納用
-    private AudioManager _audioscript;
-
-    //--------------------------------------------
-    // public
-    //--------------------------------------------
-
-    // エネミーがスタンできる状態かを判定するフラグ
-    [HideInInspector]
-    public bool canStopEnemy = false;
+    private bool m_isLighting;
 
     void Start()
     {
         // スクリプトを取得する
-        m_lightscript = LightObj.GetComponent<Light>();
-        _Judge = JudgeObje.GetComponent<Flash_Judge>();
-        _audioscript = _audiomng.GetComponent<AudioManager>();
+        m_lightScript = m_lightObj.GetComponent<Light>();
+        m_JudgeScript = m_judgeObj.GetComponent<Flash_Judge>();
+
 
         // フラグを初期化
-        isLighting = false;
+        m_isLighting = false;
         // ライトオブジェクトを非アクティブにしておく
-        LightObj.SetActive(false);
+        m_lightObj.SetActive(false);
         // 最初の光の値を取得
-        startintensity = m_lightscript.intensity;
+        m_startIntensity = m_lightScript.intensity;
 
         //ゲージを初期値で更新
         m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
@@ -84,10 +71,10 @@ public class Player_Light : MonoBehaviour
         if (m_currentBattery <= 0)
         {
             // ライトオブジェクトを非アクティブにする
-            LightObj.SetActive(false);
+            m_lightObj.SetActive(false);
 
             // ライト消灯の音を鳴らす
-            _audioscript.LightUpSE();
+            AudioManager.instance.LightUpSE();
         }
 
         // ライトを点灯する
@@ -100,7 +87,7 @@ public class Player_Light : MonoBehaviour
         }
 
         // ライトが点灯していたら処理する
-        if (isLighting == true)
+        if (m_isLighting == true)
         {
             // バッテリーを時間経過で減らしていく
             BatteryDecrease();
@@ -112,13 +99,11 @@ public class Player_Light : MonoBehaviour
         {
             //緑
             m_gaugeController.ChangeColor1();
-            //Debug.Log("1");
         }
         else if (m_currentBattery <= 50 && m_currentBattery >= 20)
         {
             //黄
             m_gaugeController.ChangeColor2();
-            //Debug.Log("2");
         }
         else
         {
@@ -129,8 +114,8 @@ public class Player_Light : MonoBehaviour
 
         if(m_currentBattery <= 50)
         {
-            blinkingTimer += Time.deltaTime;
-            m_lightscript.intensity = startintensity * _curve.Evaluate(blinkingTimer * blinkingspeed);
+            m_blinkingTimer += Time.deltaTime;
+            m_lightScript.intensity = m_startIntensity * m_curve.Evaluate(m_blinkingTimer * m_blinkingSpeed);
         }
     }
 
@@ -139,26 +124,25 @@ public class Player_Light : MonoBehaviour
     {
 
         // ライトが点灯していなかったら処理する
-        if (Input.GetButtonDown("Light") && !isLighting && m_currentBattery > 0)
+        if (Input.GetButtonDown("Light") && !m_isLighting && m_currentBattery > 0)
         {
             // 点灯しているかのフラグを上げる
-            isLighting = true;
+            m_isLighting = true;
             // ライトオブジェクトをアクティブにする
-            LightObj.SetActive(true);
+            m_lightObj.SetActive(true);
             // ライト点灯の音を鳴らす
-            _audioscript.LightUpSE();
-
+            AudioManager.instance.LightUpSE();
         }
 
         // ライトが点灯していたら処理する
-        else if (Input.GetButtonDown("Light") && isLighting)
+        else if (Input.GetButtonDown("Light") && m_isLighting)
         {
             // 点灯しているかのフラグを下げる
-            isLighting = false;
+            m_isLighting = false;
             // ライトオブジェクトを非アクティブにする
-            LightObj.SetActive(false);
+            m_lightObj.SetActive(false);
             // ライト消灯の音を鳴らす
-            _audioscript.LightUpSE();
+            AudioManager.instance.LightUpSE();
         }
     }
 
@@ -166,38 +150,36 @@ public class Player_Light : MonoBehaviour
     void Flash()
     {
         // 入力制限用
-        if (FlashCoolTimer >= 0.0f)
+        if (m_flashCoolTimer >= 0.0f)
         {
-            FlashCoolTimer -= Time.deltaTime;
+            m_flashCoolTimer -= Time.deltaTime;
         }
 
         // ボタンが押されたかつライトが付いているかつタイマーが0以下かつバッテリーがある場合処理する
-        if (Input.GetButtonDown("Flash") && isLighting && FlashCoolTimer <= 0.0f && m_currentBattery > 0)
+        if (Input.GetButtonDown("Flash") && m_isLighting && m_flashCoolTimer <= 0.0f && m_currentBattery > 0)
         {
-            // 敵の動きを止めることが可能な状態なら処理する
-            if (canStopEnemy)
+            // フラッシュ判定用オブジェクトから敵リストを取得
+            List<Enemy> targets = m_JudgeScript.GetEnemies();
+
+            foreach (var enemy in targets)
             {
-                // フラッシュの判定用スクリプトにアクセスし、nullかどうか判定する
-                if (_Judge._esearch != null)
-                {
-                    // 敵スクリプトにアクセスしスタン状態にする
-                    _Judge._esearch.isStan = true;
-                }
+                enemy.SetStan(true); // スタンを付与
             }
+
             // 光量を上げる
-            m_lightscript.intensity = 100f;
+            m_lightScript.intensity = 100f;
 
             // 光量を下げていくコルーチンスタート
             StartCoroutine(Downintensity());
 
             // タイマーをリセットする
-            FlashCoolTimer = UseFlashInterval;
+            m_flashCoolTimer = m_useFlashInterval;
 
             //バッテリーを減少させる
             BatteryFlash();
 
             // フラッシュの音を鳴らす
-            _audioscript.FlashSE();
+            AudioManager.instance.FlashSE();
         }
     }
 
@@ -217,7 +199,7 @@ public class Player_Light : MonoBehaviour
             yield return new WaitForSeconds(waittime);
 
             // 光量を徐々に下げていく
-            m_lightscript.intensity = intensity;
+            m_lightScript.intensity = intensity;
         }
     }
 
@@ -238,7 +220,6 @@ public class Player_Light : MonoBehaviour
 
     }
 
-
     //電力をフラッシュライトで消費
     public void BatteryFlash()
     {
@@ -248,13 +229,11 @@ public class Player_Light : MonoBehaviour
             //電力が減った後のゲージの見た目を更新
             m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
         }
-
     }
 
     //アイテムで電力を回復
     public void HealBattery()
     {
-
         m_currentBattery += 50;
         //電力が回復した後のゲージの見た目を更新
         m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);

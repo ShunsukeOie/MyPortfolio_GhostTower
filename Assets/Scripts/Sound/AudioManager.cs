@@ -4,23 +4,34 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager instance {  get; private set; }
+
     // AudioSource格納用
     private AudioSource _audioSource;
 
     // BGM格納用
     [SerializeField, Header("BGMのオブジェクト")]
-    private GameObject[] _bgmobj;
+    private GameObject[] _bgmObj;
 
     // プレイヤーの音格納用 (0 = ライト点灯, 1 = ライト消灯, 2 = フラッシュ, 3 = ランタン点灯, 4 = やられ音 5 = アイテムゲット)
     [SerializeField, Header("Player用のSE")]
-    private AudioClip[] _playerse;
+    private AudioClip[] _playerSE;
 
     // 音を切り替える為のフラグ
-    [HideInInspector]
-    public bool ChangeAudio = false;
-    
+    private bool ChangeAudio = false;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        // シングルトン初期化
+        if (instance != null && instance != this)
+        {
+            // もし他にこのスクリプトがアタッチされていた場合削除する
+            Destroy(gameObject);
+        }
+        instance = this;
+
+    }
+
     void Start()
     {
         // コンポーネントを取得
@@ -34,61 +45,66 @@ public class AudioManager : MonoBehaviour
         if (!ChangeAudio)
         {
             // 敵が追っているとき用のBGMを流さない
-            _bgmobj[1].SetActive(false);
+            _bgmObj[1].SetActive(false);
 
             // デフォルトの音を流す
-            _bgmobj[0].SetActive(true);
+            _bgmObj[0].SetActive(true);
         }
         // フラグが上がっていたら敵が追っているとき用の音を流す
         else
         {
             // デフォルトの音を流さない
-            _bgmobj[0].SetActive(false);
+            _bgmObj[0].SetActive(false);
 
             // 敵が追っているとき用の音を流す
-            _bgmobj[1].SetActive(true);
+            _bgmObj[1].SetActive(true);
         }
+    }
+
+    public void SetChangeAudio(bool audio)
+    {
+        ChangeAudio = audio;
     }
 
     // プレイヤーがライトを点灯する時に流す効果音
     public void LightUpSE()
     {
         // ライト点灯の音を鳴らす
-        _audioSource.PlayOneShot(_playerse[0]);
+        _audioSource.PlayOneShot(_playerSE[0]);
     }
 
     // プレイヤーがライトを消灯する時に流す効果音
     public void LightDownSE()
     {
         // ライト消灯の音を鳴らす
-        _audioSource.PlayOneShot(_playerse[1]);
+        _audioSource.PlayOneShot(_playerSE[1]);
     }
 
     // プレイヤーがフラッシュを使用するときに流す効果音
     public void FlashSE()
     {
         // フラッシュの音を鳴らす
-        _audioSource.PlayOneShot(_playerse[2]);
+        _audioSource.PlayOneShot(_playerSE[2]);
     }
 
     // プレイヤーがランタンを灯す時に流す効果音
     public void LanthanumSE()
     {
         // フラッシュの音を鳴らす
-        _audioSource.PlayOneShot(_playerse[3]);
+        _audioSource.PlayOneShot(_playerSE[3]);
     }
 
     // プレイヤーがやられた時のに流す効果音
     public void PlayerDeadSE()
     {
         // やられ音を鳴らす
-        _audioSource.PlayOneShot(_playerse[4]);
+        _audioSource.PlayOneShot(_playerSE[4]);
     }
 
     // プレイヤーがアイテムを入手した時に流す効果音
     public void ItemGetSE()
     {
         // アイテム入手の音を流す
-        _audioSource.PlayOneShot(_playerse[5]);
+        _audioSource.PlayOneShot(_playerSE[5]);
     }
 }

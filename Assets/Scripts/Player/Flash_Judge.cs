@@ -6,23 +6,10 @@ public class Flash_Judge : MonoBehaviour
 {
     // フラッシュの範囲
     [SerializeField, Header("フラッシュの範囲")]
-    private float angle = 45.0f;
+    private float m_viewAngle = 45.0f;
 
     // エネミーのスクリプト取得用変数
-    [HideInInspector]
-    public Enemy_Search _esearch = null;
-
-    // プレイヤーのオブジェクト
-    [SerializeField, Header("プレイヤーオブジェ")]
-    private GameObject player;
-    // プレイヤーのスクリプト格納用
-    private Player_Light _plyLight;
-
-    private void Start()
-    {
-        // スクリプト取得
-        _plyLight = player.GetComponent<Player_Light>();
-    }
+    private List<Enemy> m_enemyList = new List<Enemy>();
 
     // 範囲内に入っていたら
     private void OnTriggerStay(Collider other)
@@ -36,7 +23,7 @@ public class Flash_Judge : MonoBehaviour
             float target_angle = Vector3.Angle(this.transform.forward, posDelta);
 
             // target_angleがm_angleに収まっているかどうか
-            if (target_angle < angle)
+            if (target_angle < m_viewAngle)
             {
                 // レイを使用してEnemyに当たっているか判別する
                 if (Physics.Raycast(this.transform.position, posDelta, out RaycastHit hit))
@@ -45,20 +32,32 @@ public class Flash_Judge : MonoBehaviour
                     if (hit.collider == other)
                     {
                         // 敵のスクリプト取得
-                        _esearch = other.GetComponent<Enemy_Search>();
-                        // プレイヤーのスクリプトにアクセスし、フラグを上げる
-                        _plyLight.canStopEnemy = true;
+                        var enemy = other.GetComponent<Enemy>();
+                        if(enemy != null && m_enemyList.Contains(enemy))
+                        {
+                            m_enemyList.Add(enemy);
+                        }
                     }
                 }
-                Debug.DrawRay(transform.position, posDelta, Color.red);
-            }
-            else
-            {
-                // スクリプト格納用変数をnullにしておく
-                _esearch = null;
-                // 角度内にいなかったらフラグを降ろす
-                _plyLight.canStopEnemy = false;
             }
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            // 敵のスクリプト取得
+            var enemy = other.GetComponent<Enemy>();
+            if (enemy != null && m_enemyList.Contains(enemy))
+            {
+                m_enemyList.Remove(enemy);
+            }
+        }
+    }
+
+    public List<Enemy> GetEnemies()
+    {
+        return m_enemyList;
     }
 }

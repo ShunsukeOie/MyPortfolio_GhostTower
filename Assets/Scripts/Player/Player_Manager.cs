@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class Player_Manager : MonoBehaviour
 {
-    // スタート位置格納用
-    private Vector3 startPos;
+    //ライトの処理をアタッチ
+    private Player_Light m_lightScript;
 
-    [SerializeField, Header("AudioMangerオブジェクト")]
-    private GameObject _audiomng;
-    // AudioManagerのスクリプト格納用
-    private AudioManager _audioscript;
+
+    // スタート位置格納用
+    private Vector3 m_startPos;
 
     // Start is called before the first frame update
     void Start()
     {
         // コンポーネントを取得
-        _audioscript = _audiomng.GetComponent<AudioManager>();
+        m_lightScript = GetComponent<Player_Light>();
 
         // スタート位置を格納する
-        startPos = transform.position;
+        m_startPos = transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,23 +26,24 @@ public class Player_Manager : MonoBehaviour
         // タグがEnemyのオブジェクトに当たったら処理する
         if (other.gameObject.tag == "Enemy")
         {
-            Debug.Log("戻る");
-
             // スタート位置に戻す
-            transform.position = startPos;
+            transform.position = m_startPos;
 
             // やられ音を流す
-            _audioscript.PlayerDeadSE();
+            AudioManager.instance.PlayerDeadSE();
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
         // タグがItemのオブジェクトに当たったら処理する
-        if(collision.gameObject.tag == "Item")
+        if (other.gameObject.tag == "Item")
         {
             // アイテムゲットの音を流す
-            _audioscript.ItemGetSE();
+            AudioManager.instance.ItemGetSE();
+
+            // バッテリーを回復する
+            m_lightScript.HealBattery();
+
+            // アイテムを削除
+            Destroy(other.gameObject);
         }
     }
 }

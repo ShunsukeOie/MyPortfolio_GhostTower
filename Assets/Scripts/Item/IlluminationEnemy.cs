@@ -17,7 +17,7 @@ public class IlluminationEnemy : MonoBehaviour
             for(int i = 0; i < enemy.Length; ++i)
             {
                 // エネミーのスクリプトにアクセスしフラグを上げる
-                enemy[i].GetComponent<Enemy_Light>().isLighting = true;
+                enemy[i].GetComponent<Enemy>().TriggerFlash();
             }
             // 自分自身を破壊する
             Destroy(gameObject);

@@ -5,36 +5,25 @@ using UnityEngine;
 public class Player_lanthanum : MonoBehaviour
 {
     // 目の前にあるランタンを格納する為の変数
-    private GameObject LanthanumObj = null;
+    private GameObject m_lanthanumObj = null;
 
     [SerializeField, Header("目の前にアイテムがある時に表示されるUI")]
-    private GameObject UIImage;
+    private GameObject m_UIImage;
 
     [SerializeField, Header("Rayのサイズ")]
-    private Vector3 BoxSize;
+    private Vector3 m_BoxSize;
 
     // レイの判定用
-    private RaycastHit hit;
+    private RaycastHit m_hit;
 
     [SerializeField, Header("どの距離まで判定を取るか")]
-    private float Distance;
+    private float m_distance;
     
     // アイテムが目の前にあるか
-    private bool IsItem = false;
+    private bool m_isItem = false;
 
     [SerializeField, Header("どのレイヤーの判定を取るか")]
-    private LayerMask layerMask;
-
-    [SerializeField, Header("AudioMangerオブジェクト")]
-    private GameObject _audiomng;
-    // AudioManagerのスクリプト格納用
-    private AudioManager _audioscript;
-
-    private void Start()
-    {
-        // コンポーネントを取得
-        _audioscript = _audiomng.GetComponent<AudioManager>();
-    }
+    private LayerMask m_layerMask;
 
     // Update is called once per frame
     void Update()
@@ -50,20 +39,20 @@ public class Player_lanthanum : MonoBehaviour
     void LanthanumCheck()
     {
         // 目の前に箱型のレイを飛ばしてランタンがあるか判定する
-        if(Physics.BoxCast(transform.position, BoxSize, transform.forward,
-            out hit, gameObject.transform.rotation, Distance, layerMask))
+        if(Physics.BoxCast(transform.position, m_BoxSize, transform.forward,
+            out m_hit, gameObject.transform.rotation, m_distance, m_layerMask))
         {
             // レイにヒットしたオブジェクトのタグがLanthanumだったら処理する
-            if (hit.collider.gameObject.tag == "Lanthanum")
+            if (m_hit.collider.gameObject.tag == "Lanthanum")
             {
                 //　目の前のランタンの情報を格納
-                LanthanumObj = hit.collider.gameObject;
+                m_lanthanumObj = m_hit.collider.gameObject;
 
-                if (!IsItem)
+                if (!m_isItem)
                 {
                     //UIを表示
-                    UIImage.SetActive(true);
-                    IsItem = true;
+                    m_UIImage.SetActive(true);
+                    m_isItem = true;
                 }
             }
         }
@@ -71,12 +60,12 @@ public class Player_lanthanum : MonoBehaviour
         {
             //目の前に無かったら
             //アイテム情報を削除
-            LanthanumObj = null;
-            if (IsItem)
+            m_lanthanumObj = null;
+            if (m_isItem)
             {
                 //UIを非表示に
-                UIImage.SetActive(false);
-                IsItem = false;
+                m_UIImage.SetActive(false);
+                m_isItem = false;
             }
         }
     }
@@ -87,21 +76,21 @@ public class Player_lanthanum : MonoBehaviour
         if (Input.GetButtonDown("LightUp"))
         {
             // ランタンオブジェがnullじゃなかったら処理する
-            if(LanthanumObj != null)
+            if(m_lanthanumObj != null)
             {
                 // ランタンオブジェの子オブジェクトを取得する
-                GameObject candle = LanthanumObj.transform.Find("candle_").gameObject;
+                GameObject candle = m_lanthanumObj.transform.Find("candle_").gameObject;
                 // 点滅をやめる
                 candle.GetComponent<FlickeringLight>().enabled = false;
                 // 光の範囲を6に固定する
                 candle.GetComponent<Light>().range = 6;
                 // ランタンオブジェクトが反応しないようタグを切り替えておく
-                LanthanumObj.gameObject.tag = "none";
+                m_lanthanumObj.gameObject.tag = "none";
                 // UIを非表示にする
-                UIImage.SetActive(false);
+                m_UIImage.SetActive(false);
 
                 // ランタン点灯の音を流す
-                _audioscript.LanthanumSE();
+                AudioManager.instance.LanthanumSE();
             }
         }
     }

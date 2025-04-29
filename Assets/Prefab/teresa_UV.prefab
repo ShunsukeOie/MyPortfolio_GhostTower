@@ -66,8 +66,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf3e250eda92ff49bfdfc970fa80521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 45
-  EnemyObj: {fileID: 9036713579946024817}
+  m_enemyObj: {fileID: 0}
+  m_viewAngle: 45
 --- !u!1001 &8190273998163845664
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -149,10 +149,13 @@ PrefabInstance:
       addedObject: {fileID: 3864658754912447543}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 75e656c3276641c44b344e24ead74686, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6036840857523403522}
+      addedObject: {fileID: 8450515152478627241}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 75e656c3276641c44b344e24ead74686, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6597189761405516592}
+      addedObject: {fileID: 5504385854200644954}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 75e656c3276641c44b344e24ead74686, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2659675514941461239}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 75e656c3276641c44b344e24ead74686, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1117714040404759608}
@@ -196,7 +199,19 @@ CapsuleCollider:
   m_Height: 2.38
   m_Direction: 1
   m_Center: {x: 0, y: -0.12, z: 0}
---- !u!114 &6036840857523403522
+--- !u!114 &8450515152478627241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9036713579946024817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 128cfb0ba3a765344ae520c12e55afec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5504385854200644954
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,21 +223,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d56bcfcc5665947a694c293e0b03f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  goals:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _agent: {fileID: 0}
-  destNum: 0
-  isChasePlayer: 0
-  isStan: 0
---- !u!114 &6597189761405516592
+  m_patrolPoints: []
+  m_agent: {fileID: 0}
+--- !u!114 &2659675514941461239
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -234,7 +237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70267ccb53d00114685aa24bb0de1195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLighting: 0
 --- !u!195 &1117714040404759608
 NavMeshAgent:
   m_ObjectHideFlags: 0

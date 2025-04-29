@@ -1,0 +1,98 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class Enemy : MonoBehaviour
+{
+    private Enemy_Search m_searchScript;
+    private Enemy_Light m_lightScript;
+
+    // スタン時間計測用
+    private float m_stanTime = 2.0f;
+    private float m_stanTimer = 0.0f;
+
+    // 外部から読み取りは出来るが書き換えは出来ない
+    // プレイヤーを追っているかを判定する変数
+    public bool m_isChasingPlayer { get; private set; } = false;
+
+    // スタン状態かどうかのフラグ
+    public bool m_isStan { get; private set; } = false;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        m_searchScript = GetComponent<Enemy_Search>();
+        m_lightScript = GetComponent<Enemy_Light>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(m_isChasingPlayer)
+        {
+            AudioManager.instance.SetChangeAudio(true);
+        }
+        else
+        {
+            AudioManager.instance.SetChangeAudio(false);
+        }
+        // スタンしていないときはポイントに向かって移動する
+        if(!m_isStan)
+        {
+            m_searchScript.UpdateMove(m_isChasingPlayer);
+        }
+        else
+        {
+            // スタン時の移動速度を変更
+            m_searchScript.HandleStan(m_isStan);
+
+            // 時間を加算する
+            m_stanTimer += Time.deltaTime;
+            // タイマーがスタン時間を超えたら
+            if (m_stanTimer >= m_stanTime)
+            {
+                // 時間をリセットする
+                m_stanTimer = 0.0f;
+                // フラグを降ろす
+                m_isStan = false;
+                // プレイヤーを追わなくする
+                m_isChasingPlayer = false;
+            }
+        }
+        // プレイヤーを追っていたら光る
+        m_lightScript.UpdateLighting(m_isChasingPlayer);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // プレイヤーに触れたら処理する
+        if (other.gameObject.tag == "Player")
+        {
+            // 初期位置に戻す
+            m_searchScript.ResetPosition();
+            // プレイヤーを追わないように
+            m_isChasingPlayer = false;
+            // 敵が追っているとき用の音に切り替える為、AudioManagerのフラグを変える
+            AudioManager.instance.SetChangeAudio(false);
+        }
+    }
+
+    // m_isChasingPlayerをセットする関数
+    public void SetChasePlayer(bool isChasing)
+    {
+        m_isChasingPlayer = isChasing;
+    }
+
+    // m_isStanをセットする関数
+    public void SetStan(bool isStan)
+    {
+        m_isStan = isStan;
+    }
+
+    // プレイヤーがアイテムを拾った時に光らせるための関数
+    public void TriggerFlash()
+    {
+        m_lightScript.FlashLight();
+    }
+}

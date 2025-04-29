@@ -5,51 +5,53 @@ using UnityEngine;
 public class Enemy_Light : MonoBehaviour
 {
     // Lightのスクリプト格納用
-    private Light _lightscript;
-
-    // Enemy_Searchスクリプト格納用
-    private Enemy_Search _searchscript;
+    private Light m_lightScript;
 
     // 光るかどうかのフラグ
-    [HideInInspector]
-    public bool isLighting = false;
-    
-    void Start()
+    private bool m_isLighting = false;
+
+    // Enemy.csのStartの前に処理する
+    void Awake()
     {
         // コンポーネントを取得する
-        _lightscript = GetComponent<Light>();
-        _searchscript = GetComponent<Enemy_Search>();
-
+        m_lightScript = GetComponent<Light>();
     }
 
-    void Update()
+    // プレイヤーを追っている時にエネミーを光らす関数
+    public void UpdateLighting(bool isChase)
     {
         // 敵がプレイヤーを追っていたら処理する
-        if(_searchscript.isChasePlayer)
+        if (isChase)
         {
             // 敵を光らせる
-            _lightscript.intensity = 50f;
+            m_lightScript.intensity = 50.0f;
         }
         else
         {
             // 光を消す
-            _lightscript.intensity = 0f;
+            m_lightScript.intensity = 0.0f;
         }
+    }
 
-        // 光状態だったら
-       if(isLighting)
-       {
+    // プレイヤーがアイテムを拾った時に敵を光らす関数
+    public void FlashLight()
+    {
+        // 光っている状態だったら
+        if (!m_isLighting)
+        {
+            m_isLighting=true;
+
             // 光量を上げる
-            _lightscript.intensity = 50f;
+            m_lightScript.intensity = 50.0f;
 
             // 光量を下げていくコルーチンスタート
-            StartCoroutine(Downintensity());
-            isLighting = false;
+            StartCoroutine(DecreaseLightIntensity());
+            m_isLighting = false;
         }
     }
 
     // 光量を下げるコルーチン
-    IEnumerator Downintensity()
+    IEnumerator DecreaseLightIntensity()
     {
         // ループ回数(値を増やすと滑らかになる)
         int loopcount = 50;
@@ -64,7 +66,7 @@ public class Enemy_Light : MonoBehaviour
             yield return new WaitForSeconds(waittime);
 
             // 光量を徐々に下げていく
-            _lightscript.intensity = intensity;
+            m_lightScript.intensity = intensity;
         }
     }
 }

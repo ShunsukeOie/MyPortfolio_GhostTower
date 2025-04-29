@@ -7,139 +7,99 @@ using UnityEngine.UIElements;
 public class Enemy_Search : MonoBehaviour
 {
     // 自身のスタート位置を格納する変数
-    private Vector3 startPos;
+    private Vector3 m_startPos;
 
-    // プレイヤーの位置を格納する変数
-    [SerializeField]
-    private Transform player;
-
-    // スタン時間計測用
-    private float stanTime = 2.0f;
-    private float stanTimer = 0.0f;
-
-    // 目的地を設定する変数
-    [Header("目的地")]
-    public Transform[] goals = null;
-
-    // ナビゲーションのコンポーネントを格納する変数
-    [HideInInspector]
-    public NavMeshAgent _agent;
+    // プレイヤーを格納する変数
+    private GameObject m_player;
 
     // 配列のインデックス番号指定用変数
-    [HideInInspector]
-    public int destNum = 0;
+    private int m_currentIndex = 0;
 
-    // プレイヤーを追っているかを判定する変数
-    [HideInInspector]
-    public bool isChasePlayer = false;
+    // 目的地を設定する変数
+    [SerializeField, Header("目的地")]
+    private Transform[] m_patrolPoints = null;
 
-    // スタン状態かどうかのフラグ
-    [HideInInspector]
-    public bool isStan = false;
+    // ナビゲーションのコンポーネントを格納する変数
+    private NavMeshAgent m_agent;
 
-    
-
-    void Start()
+    // Enemy.csのStartの前に処理する
+    void Awake()
     {
+        // プレイヤーを取得
+        m_player = GameObject.FindWithTag("Player");
         // スタート位置を保存する
-        startPos = transform.position;
+        m_startPos = transform.position;
         // コンポーネント取得
-        _agent = GetComponent<NavMeshAgent>();
+        m_agent = GetComponent<NavMeshAgent>();
+    }
+
+    public void StartPatrol()
+    {
         // 敵を次の目的地に向かって動かす
-        _agent.destination = goals[destNum].position;
-    }
-
-    void Update()
-    {
-        Move();
-    }
-
-    // 敵の移動用関数
-    void Move()
-    {
-        // スタン状態だったら（プレイヤーからフラッシュを食らったらtrueになる）
-        if (isStan)
-        {
-            // 移動速度を0にする
-            _agent.speed = 0.0f;
-
-            // 時間を加算する
-            stanTimer += Time.deltaTime;
-            // タイマーがスタン時間を超えたら
-            if (stanTimer >= stanTime)
-            {
-                // スピードを元に戻す
-                _agent.speed = 2.0f;
-                // 時間をリセットする
-                stanTimer = 0.0f;
-                // フラグを降ろす
-                isStan = false;
-                // プレイヤーを追わなくする
-                isChasePlayer = false;
-
-                // デフォルトの音に切り替える為、AudioManagerのフラグを変える
-                AudioManager mng = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-                mng.ChangeAudio = false;
-            }
-        }
-        // スタン状態じゃない
-        else
-        {
-            // m_agent.remainingDistanceは敵と次の目的地までの距離を表している
-            // 近づくほど0に近づいていく
-            if (_agent.remainingDistance < 0.5f && !isChasePlayer)
-            {
-                // プレイヤーを見つけてないときの速度
-                _agent.speed = 2.0f;
-                // 次の目的地に向かう
-                nextGoal();
-            }
-
-            // プレイヤーを追うフラグが立っていたら
-            if (isChasePlayer)
-            {
-                // プレイヤーの位置に向かって移動する
-                _agent.SetDestination(player.position);
-            }
-        }
+        m_agent.destination = m_patrolPoints[m_currentIndex].position;
     }
 
     // 次の目的地に移動する関数
-    void nextGoal()
+    void UpdatePatrolPoint()
     {
-        // インデックス番号を更新する
-        destNum += 1;
-        // 最終番号になったら
-        if (destNum == 8)
-        {
-            // 最初の番号に戻す
-            destNum = 0;
-        }
+        // インデックス番号を更新する（最終番号になったら最初の番号に戻す）
+        m_currentIndex = (m_currentIndex + 1) % m_patrolPoints.Length;
+
         // 敵を次の目的地に向かって動かす
-        _agent.destination = goals[destNum].position;
+        m_agent.destination = m_patrolPoints[m_currentIndex].position;
     }
 
-    private void OnTriggerEnter(Collider other)
+    // 敵の移動用関数
+    public void UpdateMove(bool isChase)
     {
-        // プレイヤーに触れたら処理する
-        if (other.gameObject.tag == "Player")
+        // プレイヤーを追うフラグが立っていたら
+        if (isChase)
         {
-            // 元の位置に戻る
-            transform.position = startPos;
-
-            // 敵を最初の目的地に向かって動かす
-            destNum = 0;
-            _agent.destination = goals[destNum].position;
-
-            // プレイヤーを追わなくする
-            isChasePlayer = false;
-
-            // デフォルトの音に切り替える為、AudioManagerのフラグを変える
-            AudioManager mng = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-            mng.ChangeAudio = false;
-
-            // 速度を元に戻す
-            _agent.speed = 2.0f;
+            // 移動速度を上げる
+            m_agent.speed = 3.0f;
+            // プレイヤーの位置に向かって移動する
+            m_agent.SetDestination(m_player.transform.position);
         }
+        else
+        {
+            // 移動速度を戻す
+            m_agent.speed = 2.0f;
+            // m_agent.remainingDistanceは敵と次の目的地までの距離を表している
+            // 近づくほど0に近づいていく
+            if (m_agent.remainingDistance < 0.5f)
+            {
+                // 次の目的地に向かう
+                UpdatePatrolPoint();
+            }
+        }
+    }
+
+    // 敵のスタンの処理をまとめた関数
+    public void HandleStan(bool isStan)
+    {
+        if (isStan)
+        {
+            // 移動速度を0にする
+            m_agent.speed = 0.0f;
+        }
+        else
+        {
+            // 移動速度を戻す
+            m_agent.speed = 2.0f;
+        }
+    }
+
+    // プレイヤーに当たった際に初期化する関数
+    public void ResetPosition()
+    {
+        // 初期位置にリセット
+        transform.position = m_startPos;
+
+        // 敵を最初の目的地に向かって動かす
+        m_currentIndex = 0;
+        m_agent.destination = m_patrolPoints[m_currentIndex].position;
+
+        // 移動速度を戻す
+        m_agent.speed = 2.0f;
     }
 }

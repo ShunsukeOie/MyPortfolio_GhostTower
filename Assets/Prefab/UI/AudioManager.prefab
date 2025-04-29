@@ -271,17 +271,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c53f4cab90066d846a5ce02cc18279ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bgmobj:
+  _bgmObj:
   - {fileID: 456769711019673650}
   - {fileID: 9138340142261931500}
-  _playerse:
+  _playerSE:
   - {fileID: 8300000, guid: d97854a65c9d6d446acf3f7486f385ee, type: 3}
   - {fileID: 8300000, guid: d8ac4ccdd9638644f87a6280d15d258d, type: 3}
   - {fileID: 8300000, guid: dd30c0a2db34d264f98f3a59974e6e36, type: 3}
   - {fileID: 8300000, guid: 327f095d5cc3dce4ba9dab3a15cfc883, type: 3}
   - {fileID: 8300000, guid: 435726e5ae43eee48a254e73c3132dd4, type: 3}
   - {fileID: 8300000, guid: 035b48e055821e64db0703b21f023b3c, type: 3}
-  ChangeAudio: 0
 --- !u!1 &9138340142261931500
 GameObject:
   m_ObjectHideFlags: 0
