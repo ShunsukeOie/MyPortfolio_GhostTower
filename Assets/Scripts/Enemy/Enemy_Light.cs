@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy_Light : MonoBehaviour
 {
     // Lightのスクリプト格納用
-    private Light m_lightScript;
+    private Light m_lightComp;
 
     // 光るかどうかのフラグ
     private bool m_isLighting = false;
@@ -14,7 +14,7 @@ public class Enemy_Light : MonoBehaviour
     void Awake()
     {
         // コンポーネントを取得する
-        m_lightScript = GetComponent<Light>();
+        m_lightComp = GetComponent<Light>();
     }
 
     // プレイヤーを追っている時にエネミーを光らす関数
@@ -24,12 +24,12 @@ public class Enemy_Light : MonoBehaviour
         if (isChase)
         {
             // 敵を光らせる
-            m_lightScript.intensity = 50.0f;
+            m_lightComp.intensity = 50.0f;
         }
         else
         {
             // 光を消す
-            m_lightScript.intensity = 0.0f;
+            m_lightComp.intensity = 0.0f;
         }
     }
 
@@ -42,7 +42,7 @@ public class Enemy_Light : MonoBehaviour
             m_isLighting=true;
 
             // 光量を上げる
-            m_lightScript.intensity = 50.0f;
+            m_lightComp.intensity = 50.0f;
 
             // 光量を下げていくコルーチンスタート
             StartCoroutine(DecreaseLightIntensity());
@@ -66,7 +66,7 @@ public class Enemy_Light : MonoBehaviour
             yield return new WaitForSeconds(waittime);
 
             // 光量を徐々に下げていく
-            m_lightScript.intensity = intensity;
+            m_lightComp.intensity = intensity;
         }
     }
 }

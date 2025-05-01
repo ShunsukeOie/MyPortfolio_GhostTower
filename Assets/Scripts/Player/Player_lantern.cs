@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_lanthanum : MonoBehaviour
+public class Player_lantern : MonoBehaviour
 {
     // 目の前にあるランタンを格納する為の変数
-    private GameObject m_lanthanumObj = null;
+    private GameObject m_lanternObj = null;
 
     [SerializeField, Header("目の前にアイテムがある時に表示されるUI")]
     private GameObject m_UIImage;
@@ -25,28 +25,18 @@ public class Player_lanthanum : MonoBehaviour
     [SerializeField, Header("どのレイヤーの判定を取るか")]
     private LayerMask m_layerMask;
 
-    // Update is called once per frame
-    void Update()
-    {
-        //目の前にランタンがあるかをチェック
-        LanthanumCheck();
-
-        // 光を灯す
-        LightUp();
-    }
-
     // 目の前にランタンがあるかチェックする関数
-    void LanthanumCheck()
+    public void LanternCheck()
     {
         // 目の前に箱型のレイを飛ばしてランタンがあるか判定する
         if(Physics.BoxCast(transform.position, m_BoxSize, transform.forward,
             out m_hit, gameObject.transform.rotation, m_distance, m_layerMask))
         {
-            // レイにヒットしたオブジェクトのタグがLanthanumだったら処理する
-            if (m_hit.collider.gameObject.tag == "Lanthanum")
+            // レイにヒットしたオブジェクトのタグがLanternだったら処理する
+            if (m_hit.collider.gameObject.tag == "Lantern")
             {
                 //　目の前のランタンの情報を格納
-                m_lanthanumObj = m_hit.collider.gameObject;
+                m_lanternObj = m_hit.collider.gameObject;
 
                 if (!m_isItem)
                 {
@@ -60,7 +50,7 @@ public class Player_lanthanum : MonoBehaviour
         {
             //目の前に無かったら
             //アイテム情報を削除
-            m_lanthanumObj = null;
+            m_lanternObj = null;
             if (m_isItem)
             {
                 //UIを非表示に
@@ -71,27 +61,24 @@ public class Player_lanthanum : MonoBehaviour
     }
 
     // ランタンを点灯させる関数
-    void LightUp()
+    public void LightUp()
     {
-        if (Input.GetButtonDown("LightUp"))
+        // ランタンオブジェがnullじゃなかったら処理する
+        if (m_lanternObj != null)
         {
-            // ランタンオブジェがnullじゃなかったら処理する
-            if(m_lanthanumObj != null)
-            {
-                // ランタンオブジェの子オブジェクトを取得する
-                GameObject candle = m_lanthanumObj.transform.Find("candle_").gameObject;
-                // 点滅をやめる
-                candle.GetComponent<FlickeringLight>().enabled = false;
-                // 光の範囲を6に固定する
-                candle.GetComponent<Light>().range = 6;
-                // ランタンオブジェクトが反応しないようタグを切り替えておく
-                m_lanthanumObj.gameObject.tag = "none";
-                // UIを非表示にする
-                m_UIImage.SetActive(false);
+            // ランタンオブジェの子オブジェクトを取得する
+            GameObject candle = m_lanternObj.transform.Find("candle_").gameObject;
+            // 点滅をやめる
+            candle.GetComponent<FlickeringLight>().enabled = false;
+            // 光の範囲を6に固定する
+            candle.GetComponent<Light>().range = 6;
+            // ランタンオブジェクトが反応しないようレイヤーを変えておく
+            m_lanternObj.layer = LayerMask.NameToLayer("IgnoreRaycast");
+            // UIを非表示にする
+            m_UIImage.SetActive(false);
 
-                // ランタン点灯の音を流す
-                AudioManager.instance.LanthanumSE();
-            }
+            // ランタン点灯の音を流す
+            AudioManager.instance.LanthanumSE();
         }
     }
 }

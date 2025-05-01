@@ -7,124 +7,97 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class Player_Light : MonoBehaviour
 {
-    // ライトオブジェクト
     [SerializeField, Header("ライトオブジェクト")]
     private GameObject m_lightObj;
-    // ライトのスクリプトを格納する変数
-    private Light m_lightScript;
 
-    // フラッシュを判定するオブジェクト
-    //（別にすることで敵の索敵範囲との干渉をなくす）
     [SerializeField, Header("フラッシュ判定オブジェクト")]
-    private GameObject m_judgeObj;
-    // フラッシュ判定用のスクリプト格納用
-    private Flash_Judge m_JudgeScript;
+    private GameObject m_flashJudgeObj;
 
-    //ゲージ操作クラスの取得用変数
     [SerializeField, Header("ゲージ操作クラス")]
     private GaugeController m_gaugeController;
 
-    // フラッシュのインターバル用の変数
+    [SerializeField, Header("光の点滅用カーブ")]
+    private AnimationCurve m_curve;
+
     [SerializeField, Header("フラッシュのインターバル")]
     private float m_useFlashInterval;
-    private float m_flashCoolTimer;
 
-    //バッテリー用
-    private float m_maxBattery = 100;     //最大電力
-    private float m_currentBattery = 100; //現在の電力
-
-    [SerializeField, Header("光の点滅用カーブ")]
-    AnimationCurve m_curve;
     [SerializeField, Header("光の点滅スピード")]
     private float m_blinkingSpeed;
+
+    // ライトのスクリプトを格納する変数
+    private Light m_lightComp;
+
+    // フラッシュ判定用のスクリプト格納用
+    private Flash_Judge m_flashJudgeComp;
+
+    // コルーチンが多重起動起動しないようにするための変数
+    private Coroutine m_coroutine;
+
+    // 現在の電力
+    private float m_currentBattery = 100f;
+
     // 最初の光の値
     private float m_startIntensity;
+
+    // フラッシュのクールタイマー
+    private float m_flashCoolTimer;
+
     // 光の点滅用タイマー
-    float m_blinkingTimer = 0f;
+    private float m_blinkingTimer = 0f;
 
     // ライトが点灯しているか判定するフラグ
-    private bool m_isLighting;
+    private bool m_isLighting = false;
 
-    void Start()
+    // バッテリーがあるかを判定するフラグ
+    private bool m_isBatteryDepleted = false;
+
+    // 定数
+    private const float MAX_BATTERY = 100f;         //最大電力
+    private const float FLASH_BATTERY_COST = 10f;   // フラッシュで使うバッテリーのコスト
+    private const float HEAL_BATTERY_VALUE = 50f;   // 回復するバッテリーの量
+
+    void Awake()
     {
         // スクリプトを取得する
-        m_lightScript = m_lightObj.GetComponent<Light>();
-        m_JudgeScript = m_judgeObj.GetComponent<Flash_Judge>();
+        m_lightComp = m_lightObj.GetComponent<Light>();
+        m_flashJudgeComp = m_flashJudgeObj.GetComponent<Flash_Judge>();
 
+        // 最初の光の値を取得
+        m_startIntensity = m_lightComp.intensity;
 
-        // フラグを初期化
-        m_isLighting = false;
         // ライトオブジェクトを非アクティブにしておく
         m_lightObj.SetActive(false);
-        // 最初の光の値を取得
-        m_startIntensity = m_lightScript.intensity;
 
         //ゲージを初期値で更新
-        m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
-
+        m_gaugeController.UpdateGauge(m_currentBattery, MAX_BATTERY);
     }
 
     void Update()
     {
-
-        //　バッテリーが0になったらライトを消す
-        if (m_currentBattery <= 0)
-        {
-            // ライトオブジェクトを非アクティブにする
-            m_lightObj.SetActive(false);
-
-            // ライト消灯の音を鳴らす
-            AudioManager.instance.LightUpSE();
-        }
+        // バッテリーの残量を更新
+        UpdateBattery();
 
         // ライトを点灯する
         LightUp();
 
-        // バッテリーの残量が10以上ならフラッシュする
-        if (m_currentBattery >= 10)
+        // バッテリーの残量が10以上ならフラッシュ出来る
+        if (m_currentBattery >= FLASH_BATTERY_COST)
         {
             Flash();
         }
 
-        // ライトが点灯していたら処理する
-        if (m_isLighting == true)
-        {
-            // バッテリーを時間経過で減らしていく
-            BatteryDecrease();
-        }
-
-
-        //バッテリーの残量でゲージの色を変更する
-        if (m_currentBattery >= 50)
-        {
-            //緑
-            m_gaugeController.ChangeColor1();
-        }
-        else if (m_currentBattery <= 50 && m_currentBattery >= 20)
-        {
-            //黄
-            m_gaugeController.ChangeColor2();
-        }
-        else
-        {
-            //赤
-            m_gaugeController.ChangeColor3();
-
-        }
-
-        if(m_currentBattery <= 50)
-        {
-            m_blinkingTimer += Time.deltaTime;
-            m_lightScript.intensity = m_startIntensity * m_curve.Evaluate(m_blinkingTimer * m_blinkingSpeed);
-        }
+        // バッテリーの残量でゲージの色を変更する
+        UpdateGaugeColor();
     }
 
     // ライトを点灯させる関数
     void LightUp()
     {
+        if (m_currentBattery <= 0f) return;
 
         // ライトが点灯していなかったら処理する
-        if (Input.GetButtonDown("Light") && !m_isLighting && m_currentBattery > 0)
+        if (Input.GetButtonDown("Light") && !m_isLighting)
         {
             // 点灯しているかのフラグを上げる
             m_isLighting = true;
@@ -150,7 +123,7 @@ public class Player_Light : MonoBehaviour
     void Flash()
     {
         // 入力制限用
-        if (m_flashCoolTimer >= 0.0f)
+        if (m_flashCoolTimer >= 0f)
         {
             m_flashCoolTimer -= Time.deltaTime;
         }
@@ -159,18 +132,25 @@ public class Player_Light : MonoBehaviour
         if (Input.GetButtonDown("Flash") && m_isLighting && m_flashCoolTimer <= 0.0f && m_currentBattery > 0)
         {
             // フラッシュ判定用オブジェクトから敵リストを取得
-            List<Enemy> targets = m_JudgeScript.GetEnemies();
+            List<Enemy> targets = m_flashJudgeComp.GetEnemies();
 
             foreach (var enemy in targets)
             {
-                enemy.SetStan(true); // スタンを付与
+                // スタンを付与
+                enemy.SetStan(true);
             }
 
             // 光量を上げる
-            m_lightScript.intensity = 100f;
+            m_lightComp.intensity = 100f;
+
+            // もし複数回コルーチンが呼ばれることがあったら古いコルーチンを止める
+            if(m_coroutine != null)
+            {
+                StopCoroutine(m_coroutine);
+            }
 
             // 光量を下げていくコルーチンスタート
-            StartCoroutine(Downintensity());
+            m_coroutine = StartCoroutine(DecreaseLightIntensity());
 
             // タイマーをリセットする
             m_flashCoolTimer = m_useFlashInterval;
@@ -183,8 +163,28 @@ public class Player_Light : MonoBehaviour
         }
     }
 
+    // バッテリーの残量でゲージの色を変更する関数
+    void UpdateGaugeColor()
+    {
+        if (m_currentBattery >= 50f)
+        {
+            //緑
+            m_gaugeController.ChangeColor1();
+        }
+        else if (m_currentBattery <= 50.0f && m_currentBattery >= 20f)
+        {
+            //黄
+            m_gaugeController.ChangeColor2();
+        }
+        else
+        {
+            //赤
+            m_gaugeController.ChangeColor3();
+        }
+    }
+
     // 光量を下げるコルーチン
-    IEnumerator Downintensity()
+    IEnumerator DecreaseLightIntensity()
     {
         // ループ回数(値を増やすと滑らかになる)
         int loopcount = 50;
@@ -199,44 +199,68 @@ public class Player_Light : MonoBehaviour
             yield return new WaitForSeconds(waittime);
 
             // 光量を徐々に下げていく
-            m_lightScript.intensity = intensity;
+            m_lightComp.intensity = intensity;
         }
+        // 状態をクリア
+        m_coroutine = null;
     }
 
-    //電力を時間経過で消費
-    public void BatteryDecrease()
+    void UpdateBattery()
     {
-        // 計測時間
-        float elapsedTime = 0f;
-        elapsedTime += Time.deltaTime;
-
-        //バッテリーを減らす（０になったら止める）
-        if (m_currentBattery >= 0)
+        if (m_currentBattery > 0 && m_isLighting)
         {
-            m_currentBattery -= elapsedTime;
-        }
-        //電力が減った後のゲージの見た目を更新
-        m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
+            float newBattery = m_currentBattery -= Time.deltaTime;
+            //バッテリーを減らす
+            SetBattery(newBattery);
 
+            // バッテリーが50以下になったら
+            if (m_currentBattery <= 50f)
+            {
+                // カーブを使用してライトがチカチカする表現をする
+                m_blinkingTimer += Time.deltaTime;
+                m_lightComp.intensity = m_startIntensity * m_curve.Evaluate(m_blinkingTimer * m_blinkingSpeed);
+            }
+        }
+
+        //　バッテリーが0になったらライトを消す
+        if (m_currentBattery <= 0 && !m_isBatteryDepleted)
+        {
+            m_isBatteryDepleted = true;
+            // ライトオブジェクトを非アクティブにする
+            m_lightObj.SetActive(false);
+            // ライト消灯の音を鳴らす
+            AudioManager.instance.LightUpSE();
+        }
     }
 
     //電力をフラッシュライトで消費
     public void BatteryFlash()
     {
-        if (m_currentBattery >= 10)
-        {
-            m_currentBattery -= 10;
-            //電力が減った後のゲージの見た目を更新
-            m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
-        }
+        float newBattery = m_currentBattery -= FLASH_BATTERY_COST;
+        // バッテリーを0～MAXの値で補正しつつ、ゲージを更新する
+        SetBattery(newBattery);
     }
 
     //アイテムで電力を回復
     public void HealBattery()
     {
-        m_currentBattery += 50;
-        //電力が回復した後のゲージの見た目を更新
-        m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
+        float newBattery = m_currentBattery += HEAL_BATTERY_VALUE;
+        // バッテリーを0～MAXの値で補正しつつ、ゲージを更新する
+        SetBattery(newBattery);
+
+        // 0以下の時にバッテリーが回復されたら
+        if(m_currentBattery < 0)
+        {
+            // バッテリーがあるか判定するフラグを上げる
+            m_isBatteryDepleted = false;
+        }
+    }
+
+    // バッテリーを0～MAXの値で補正しつつ、ゲージを更新する関数
+    void SetBattery(float batteryValue)
+    {
+        m_currentBattery = Mathf.Clamp(batteryValue, 0f, MAX_BATTERY);
+        m_gaugeController.UpdateGauge(m_currentBattery, MAX_BATTERY);
     }
 }
 

@@ -8,7 +8,7 @@ public class Enemy_Vision : MonoBehaviour
     [SerializeField]
     private GameObject m_enemyObj;
     // エネミーのオブジェクトのスクリプト取得用
-    private Enemy m_enemyScript;
+    private Enemy m_enemyComp;
 
     // 見える範囲
     [SerializeField, Header("見える範囲")]
@@ -21,14 +21,14 @@ public class Enemy_Vision : MonoBehaviour
         // エネミーを取得
         m_enemyObj = transform.parent.gameObject;
         // スクリプト取得
-        m_enemyScript = m_enemyObj.GetComponent<Enemy>();
+        m_enemyComp = m_enemyObj.GetComponent<Enemy>();
     }
 
     // 範囲内に入っていたら
     private void OnTriggerStay(Collider other)
     {
         // エネミーがスタン状態ではないかつタグがPlayerのとき
-        if (other.gameObject.tag == "Player" && !m_enemyScript.m_isStan)
+        if (other.gameObject.tag == "Player" && !m_enemyComp.m_isStan)
         {
             // 正面に対して、プレイヤーの位置を取得し、45度以内か算出
             Vector3 posDelta = other.transform.position - this.transform.position;
@@ -44,7 +44,7 @@ public class Enemy_Vision : MonoBehaviour
                     // レイに当たったのがプレイヤーだったら処理する
                     if (hit.collider == other)
                     {
-                        m_enemyScript.SetChasePlayer(true);
+                        m_enemyComp.SetChasePlayer(true);
                     }
                 }
             }
@@ -52,7 +52,7 @@ public class Enemy_Vision : MonoBehaviour
             else
             {
                 // フラグを降ろす
-                m_enemyScript.SetChasePlayer(false);
+                m_enemyComp.SetChasePlayer(false);
             }
         }
     }

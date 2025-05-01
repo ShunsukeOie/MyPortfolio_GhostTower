@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private Enemy_Search m_searchScript;
-    private Enemy_Light m_lightScript;
+    private Enemy_Search m_searchComp;
+    private Enemy_Light m_lightComp;
 
     // スタン時間計測用
     private float m_stanTime = 2.0f;
@@ -22,8 +22,8 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_searchScript = GetComponent<Enemy_Search>();
-        m_lightScript = GetComponent<Enemy_Light>();
+        m_searchComp = GetComponent<Enemy_Search>();
+        m_lightComp = GetComponent<Enemy_Light>();
     }
 
     // Update is called once per frame
@@ -40,12 +40,12 @@ public class Enemy : MonoBehaviour
         // スタンしていないときはポイントに向かって移動する
         if(!m_isStan)
         {
-            m_searchScript.UpdateMove(m_isChasingPlayer);
+            m_searchComp.UpdateMove(m_isChasingPlayer);
         }
         else
         {
             // スタン時の移動速度を変更
-            m_searchScript.HandleStan(m_isStan);
+            m_searchComp.HandleStan(m_isStan);
 
             // 時間を加算する
             m_stanTimer += Time.deltaTime;
@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
             }
         }
         // プレイヤーを追っていたら光る
-        m_lightScript.UpdateLighting(m_isChasingPlayer);
+        m_lightComp.UpdateLighting(m_isChasingPlayer);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             // 初期位置に戻す
-            m_searchScript.ResetPosition();
+            m_searchComp.ResetPosition();
             // プレイヤーを追わないように
             m_isChasingPlayer = false;
             // 敵が追っているとき用の音に切り替える為、AudioManagerのフラグを変える
@@ -93,6 +93,6 @@ public class Enemy : MonoBehaviour
     // プレイヤーがアイテムを拾った時に光らせるための関数
     public void TriggerFlash()
     {
-        m_lightScript.FlashLight();
+        m_lightComp.FlashLight();
     }
 }

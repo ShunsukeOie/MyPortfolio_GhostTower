@@ -1858,6 +1858,10 @@ PrefabInstance:
       propertyPath: m_UIImage
       value: 
       objectReference: {fileID: 1002625200}
+    - target: {fileID: 4049249858381579497, guid: 6bdc55e038b1f764aa04ea4749bcc361, type: 3}
+      propertyPath: m_layerMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4920004707978813754, guid: 6bdc55e038b1f764aa04ea4749bcc361, type: 3}
       propertyPath: m_Enabled
       value: 1

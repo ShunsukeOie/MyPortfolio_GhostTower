@@ -6,25 +6,14 @@ public class Player_Move : MonoBehaviour
 {
     //プレイヤーの移動速度
     [SerializeField]
-    [Header("移動速度")] public float MoveSpeed = 0.15f;
+    [Header("移動速度")] private float m_moveSpeed = 3.0f;
 
     //プレイヤーの回転スピード
     [SerializeField]
-    [Header("回転スピード")] public float RotationSpeed = 0.15f;
-
-    // Update is called once per frame
-    void Update()
-    {
-        //左スティックで移動
-        PlayerMove();
-
-        //右スティックで回転
-        PlayerRotate();
-      
-    }
+    [Header("回転スピード")] private float m_rotationSpeed = 4.0f;
 
     //プレイヤーの移動用メソッド
-    void PlayerMove()
+    public void PlayerMove()
     {
         //左スティックの水平入力軸の値を取得する(右：プラス、左：マイナス)
         float horizontakInput = Input.GetAxis("Horizontal");
@@ -33,16 +22,16 @@ public class Player_Move : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         //左スティックの入力から定義された座標に移動
-        transform.localPosition += new Vector3(horizontakInput, 0, verticalInput) * MoveSpeed * Time.deltaTime;
+        transform.localPosition += new Vector3(horizontakInput, 0, verticalInput) * m_moveSpeed * Time.deltaTime;
     }
 
     //プレイヤーの回転用メソッド
-    void PlayerRotate()
+    public void PlayerRotate()
     {
         //右スティックの水平入力軸の値を取得する
         float horizontak2Input = Input.GetAxis("Horizontal2");
 
         //右スティックでプレイヤーを回転
-        transform.Rotate(new Vector3(0, RotationSpeed * horizontak2Input, 0));
+        transform.Rotate(new Vector3(0, m_rotationSpeed * horizontak2Input, 0));
     }
 }

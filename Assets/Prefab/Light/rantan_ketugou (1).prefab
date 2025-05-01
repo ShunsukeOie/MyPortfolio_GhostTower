@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0177e8a37310cd448b47c7deaf948c6d, type: 2}
     - target: {fileID: 2853978678062995650, guid: f769f2bf1666bcb479e8d2544d2aaeaf, type: 3}
       propertyPath: m_TagString
-      value: Lanthanum
+      value: Lantern
       objectReference: {fileID: 0}
     - target: {fileID: 2957973981896532436, guid: f769f2bf1666bcb479e8d2544d2aaeaf, type: 3}
       propertyPath: m_Materials.Array.data[0]
