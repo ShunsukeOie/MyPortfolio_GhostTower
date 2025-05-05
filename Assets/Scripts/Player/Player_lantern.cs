@@ -11,13 +11,13 @@ public class Player_lantern : MonoBehaviour
     private GameObject m_UIImage;
 
     [SerializeField, Header("Rayのサイズ")]
-    private Vector3 m_BoxSize;
+    private Vector3 m_BoxSize = new Vector3(0.25f, 0.25f, 0.25f);
 
     // レイの判定用
     private RaycastHit m_hit;
 
     [SerializeField, Header("どの距離まで判定を取るか")]
-    private float m_distance;
+    private float m_distance = 1.0f;
     
     // アイテムが目の前にあるか
     private bool m_isItem = false;
@@ -73,12 +73,12 @@ public class Player_lantern : MonoBehaviour
             // 光の範囲を6に固定する
             candle.GetComponent<Light>().range = 6;
             // ランタンオブジェクトが反応しないようレイヤーを変えておく
-            m_lanternObj.layer = LayerMask.NameToLayer("IgnoreRaycast");
+            m_lanternObj.layer = LayerMask.NameToLayer("Ignore Raycast");
             // UIを非表示にする
             m_UIImage.SetActive(false);
 
             // ランタン点灯の音を流す
-            AudioManager.instance.LanthanumSE();
+            AudioManager.Instance.LanthanumSE();
         }
     }
 }

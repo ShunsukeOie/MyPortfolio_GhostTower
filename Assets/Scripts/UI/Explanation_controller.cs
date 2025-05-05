@@ -11,12 +11,6 @@ public class Explanation_controller : MonoBehaviour
     //変更するオブジェクト格納（遊び方）
     [SerializeField] protected Image _ExplanationImage2;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // 画面をフェードインさせるコールチン
     public IEnumerator ChangeColor1()
     {
@@ -77,12 +71,5 @@ public class Explanation_controller : MonoBehaviour
             _ExplanationImage2.color = new_color;
 
         }
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-       
     }
 }

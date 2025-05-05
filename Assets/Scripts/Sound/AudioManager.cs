@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance {  get; private set; }
+    public static AudioManager Instance {  get; private set; }
 
     // AudioSource格納用
     private AudioSource _audioSource;
@@ -17,53 +17,64 @@ public class AudioManager : MonoBehaviour
     [SerializeField, Header("Player用のSE")]
     private AudioClip[] _playerSE;
 
+    // 何体の敵がプレイヤーを視認しているかを管理するカウンター
+    private int _visibleCount = 0;
+
     // 音を切り替える為のフラグ
-    private bool ChangeAudio = false;
+    private bool _changeAudio = false;
 
     private void Awake()
     {
-        // シングルトン初期化
-        if (instance != null && instance != this)
+        // インスタンスがなければ自分を設定
+        if (Instance == null)
         {
-            // もし他にこのスクリプトがアタッチされていた場合削除する
+            Instance = this;
+        }
+        else 
+        {
+            // すでにあるならば自分を削除する
             Destroy(gameObject);
         }
-        instance = this;
-
     }
 
     void Start()
     {
         // コンポーネントを取得
         _audioSource = GetComponent<AudioSource>();
+        // 通常BGMを流す
+        ApplyBGMState(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void ApplyBGMState(bool isChased)
     {
-        // フラグが下がっていたらデフォルトの音を流す
-        if (!ChangeAudio)
-        {
-            // 敵が追っているとき用のBGMを流さない
-            _bgmObj[1].SetActive(false);
+        if (_bgmObj.Length < 2) return;
 
-            // デフォルトの音を流す
-            _bgmObj[0].SetActive(true);
-        }
-        // フラグが上がっていたら敵が追っているとき用の音を流す
-        else
-        {
-            // デフォルトの音を流さない
-            _bgmObj[0].SetActive(false);
-
-            // 敵が追っているとき用の音を流す
-            _bgmObj[1].SetActive(true);
-        }
+        // 通常BGM
+        _bgmObj[0].SetActive(!isChased);
+        // 敵に追われているときのBGM
+        _bgmObj[1].SetActive(isChased);
     }
 
-    public void SetChangeAudio(bool audio)
+    // 敵がプレイヤーを視認した時呼ばれる関数
+    public void RegisterEnemyVision()
     {
-        ChangeAudio = audio;
+        _visibleCount++;
+        if(!_changeAudio)
+        {
+            _changeAudio = true;
+            ApplyBGMState(true);
+        }        
+    }
+
+    // 敵が視界から外れた時呼ばれる関数
+    public void UnregisterEnemyVision()
+    {
+        _visibleCount = Mathf.Max(_visibleCount - 1, 0);
+        if(_visibleCount == 0 && _changeAudio)
+        {
+            _changeAudio = false;
+            ApplyBGMState(false);
+        }
     }
 
     // プレイヤーがライトを点灯する時に流す効果音

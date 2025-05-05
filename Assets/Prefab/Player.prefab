@@ -118,101 +118,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &377159599282638803
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3052953262356648954}
-  - component: {fileID: 4920004707978813754}
-  - component: {fileID: 2950714469510787402}
-  - component: {fileID: 5689468428829561775}
-  m_Layer: 0
-  m_Name: FlashRange
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3052953262356648954
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377159599282638803}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.19000006, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5744909584572927126}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4920004707978813754
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377159599282638803}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 5.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2950714469510787402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377159599282638803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc644bc691738804c95921041b74574e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_viewAngle: 45
---- !u!54 &5689468428829561775
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377159599282638803}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1015588541383017911
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +149,6 @@ Transform:
   m_Children:
   - {fileID: 7341745589079125729}
   - {fileID: 7540604199370136093}
-  - {fileID: 3052953262356648954}
   - {fileID: 4265203437949972169}
   - {fileID: 3989701705784036384}
   m_Father: {fileID: 6189307128449205370}
@@ -785,6 +689,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ad13e6c0f5d7dec44b53af7544c5de92, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ad13e6c0f5d7dec44b53af7544c5de92, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -900,6 +808,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ad13e6c0f5d7dec44b53af7544c5de92, type: 3}
       insertIndex: -1
       addedObject: {fileID: 809009758454179412}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ad13e6c0f5d7dec44b53af7544c5de92, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2591795711903259373}
   m_SourcePrefab: {fileID: 100100000, guid: ad13e6c0f5d7dec44b53af7544c5de92, type: 3}
 --- !u!4 &6189307128449205370 stripped
 Transform:
@@ -988,16 +899,132 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_lightObj: {fileID: 5193058122108216276}
-  m_flashJudgeObj: {fileID: 377159599282638803}
   m_gaugeController: {fileID: 0}
   m_curve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 3.126458
+      outSlope: 3.126458
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.3137008
+      value: 0.9807723
+      inSlope: -0.032689016
+      outSlope: -0.032689016
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.48488826
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.9214491
+      value: 0.0487055
+      inSlope: -0.15236247
+      outSlope: -0.15236247
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.8648285
+    - serializedVersion: 3
+      time: 1.0522153
+      value: 0.824363
+      inSlope: 0.14576106
+      outSlope: 0.14576106
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.5330919
+    - serializedVersion: 3
+      time: 1.5467203
+      value: 0.86590797
+      inSlope: -0.0200796
+      outSlope: -0.0200796
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1974124
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1.6153849
+      value: 0.18595344
+      inSlope: 0.44673026
+      outSlope: 0.44673026
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.43477422
+    - serializedVersion: 3
+      time: 2.1036913
+      value: 0.7666716
+      inSlope: -0.069876194
+      outSlope: -0.069876194
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.6248872
+      outWeight: 0.705703
+    - serializedVersion: 3
+      time: 2.6521244
+      value: 0.7261433
+      inSlope: -0.13834941
+      outSlope: -0.13834941
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.5659546
+      outWeight: 0.833598
+    - serializedVersion: 3
+      time: 2.9154406
+      value: 0.15368372
+      inSlope: 0.159133
+      outSlope: 0.159133
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.26172796
+    - serializedVersion: 3
+      time: 3.513014
+      value: 0.49550438
+      inSlope: 0.026194768
+      outSlope: 0.026194768
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 3.9556785
+      value: 0.061598063
+      inSlope: -0.005461298
+      outSlope: -0.005461298
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.21314292
+    - serializedVersion: 3
+      time: 4.439543
+      value: 0.8852754
+      inSlope: -0.00019033688
+      outSlope: -0.00019033688
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.20263264
+    - serializedVersion: 3
+      time: 5.969513
+      value: 0.18630981
+      inSlope: -0.85782945
+      outSlope: -0.85782945
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.099842295
+      outWeight: 0
     m_PreInfinity: 2
-    m_PostInfinity: 2
+    m_PostInfinity: 1
     m_RotationOrder: 4
-  m_useFlashInterval: 0
-  m_blinkingSpeed: 0
+  m_useFlashInterval: 5
+  m_blinkingSpeed: 0.3
 --- !u!114 &4049249858381579497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1011,11 +1038,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UIImage: {fileID: 0}
-  m_BoxSize: {x: 0, y: 0, z: 0}
-  m_distance: 0
+  m_BoxSize: {x: 0.25, y: 0.25, z: 0.25}
+  m_distance: 1
   m_layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
 --- !u!114 &5147728303421325675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1043,3 +1070,23 @@ MonoBehaviour:
   MoveSpeed: 0.05
   RotationSpeed: 2
   cam: {fileID: 6847782794513782100}
+--- !u!114 &2591795711903259373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6822679274411155136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc644bc691738804c95921041b74574e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_viewAngle: 45
+  m_viewDistance: 5.5
+  m_enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  m_wallLayer:
+    serializedVersion: 2
+    m_Bits: 4

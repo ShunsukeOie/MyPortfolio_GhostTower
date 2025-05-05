@@ -19,7 +19,6 @@ public static class SceneController
     public static void CurrentSceneName()
     {
         sceneName = SceneManager.GetActiveScene().name;
-        Debug.Log(sceneName);
     }
 
     // 上記のメソッドで取得されたシーンに戻る。

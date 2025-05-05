@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
     private Enemy_Search m_searchComp;
     private Enemy_Light m_lightComp;
+    private Enemy_Vision m_visionComp;
 
     // スタン時間計測用
     private float m_stanTime = 2.0f;
@@ -22,25 +23,23 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // コンポーネント取得
         m_searchComp = GetComponent<Enemy_Search>();
         m_lightComp = GetComponent<Enemy_Light>();
+        m_visionComp = GetComponent<Enemy_Vision>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(m_isChasingPlayer)
-        {
-            AudioManager.instance.SetChangeAudio(true);
-        }
-        else
-        {
-            AudioManager.instance.SetChangeAudio(false);
-        }
-        // スタンしていないときはポイントに向かって移動する
+        // スタンしていないとき
         if(!m_isStan)
         {
+            // ポイントに向かって移動する
             m_searchComp.UpdateMove(m_isChasingPlayer);
+
+            // プレイヤーが視界内にいるか判定
+            m_visionComp.DetectPlayerInView();
         }
         else
         {
@@ -74,7 +73,7 @@ public class Enemy : MonoBehaviour
             // プレイヤーを追わないように
             m_isChasingPlayer = false;
             // 敵が追っているとき用の音に切り替える為、AudioManagerのフラグを変える
-            AudioManager.instance.SetChangeAudio(false);
+            AudioManager.Instance.UnregisterEnemyVision();
         }
     }
 

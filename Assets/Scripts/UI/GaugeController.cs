@@ -37,12 +37,4 @@ public class GaugeController : MonoBehaviour
     {
         gameObject.GetComponent<Image>().color = new Color(255.0f, 0.0f, 0.0f, 255.0f);
     }
-
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

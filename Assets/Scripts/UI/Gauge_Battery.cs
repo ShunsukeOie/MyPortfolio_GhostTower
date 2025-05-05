@@ -19,13 +19,6 @@ public class Gauge_Battery : MonoBehaviour
         m_gaugeController.UpdateGauge(m_currentBattery, m_maxBattery);
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     //“d—Í‚ÌÁ”ï
     public void DamageButtonPush()
     {

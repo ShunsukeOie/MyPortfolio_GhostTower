@@ -10,9 +10,6 @@ public class Player_Light : MonoBehaviour
     [SerializeField, Header("ライトオブジェクト")]
     private GameObject m_lightObj;
 
-    [SerializeField, Header("フラッシュ判定オブジェクト")]
-    private GameObject m_flashJudgeObj;
-
     [SerializeField, Header("ゲージ操作クラス")]
     private GaugeController m_gaugeController;
 
@@ -29,7 +26,7 @@ public class Player_Light : MonoBehaviour
     private Light m_lightComp;
 
     // フラッシュ判定用のスクリプト格納用
-    private Flash_Judge m_flashJudgeComp;
+    private Player_Vision m_flashJudgeComp;
 
     // コルーチンが多重起動起動しないようにするための変数
     private Coroutine m_coroutine;
@@ -60,8 +57,8 @@ public class Player_Light : MonoBehaviour
     void Awake()
     {
         // スクリプトを取得する
+        m_flashJudgeComp = GetComponent<Player_Vision>();
         m_lightComp = m_lightObj.GetComponent<Light>();
-        m_flashJudgeComp = m_flashJudgeObj.GetComponent<Flash_Judge>();
 
         // 最初の光の値を取得
         m_startIntensity = m_lightComp.intensity;
@@ -104,7 +101,7 @@ public class Player_Light : MonoBehaviour
             // ライトオブジェクトをアクティブにする
             m_lightObj.SetActive(true);
             // ライト点灯の音を鳴らす
-            AudioManager.instance.LightUpSE();
+            AudioManager.Instance.LightUpSE();
         }
 
         // ライトが点灯していたら処理する
@@ -115,7 +112,7 @@ public class Player_Light : MonoBehaviour
             // ライトオブジェクトを非アクティブにする
             m_lightObj.SetActive(false);
             // ライト消灯の音を鳴らす
-            AudioManager.instance.LightUpSE();
+            AudioManager.Instance.LightUpSE();
         }
     }
 
@@ -159,7 +156,7 @@ public class Player_Light : MonoBehaviour
             BatteryFlash();
 
             // フラッシュの音を鳴らす
-            AudioManager.instance.FlashSE();
+            AudioManager.Instance.FlashSE();
         }
     }
 
@@ -229,7 +226,7 @@ public class Player_Light : MonoBehaviour
             // ライトオブジェクトを非アクティブにする
             m_lightObj.SetActive(false);
             // ライト消灯の音を鳴らす
-            AudioManager.instance.LightUpSE();
+            AudioManager.Instance.LightUpSE();
         }
     }
 

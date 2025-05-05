@@ -73,6 +73,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 0177e8a37310cd448b47c7deaf948c6d, type: 2}
     - target: {fileID: 2853978678062995650, guid: f769f2bf1666bcb479e8d2544d2aaeaf, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853978678062995650, guid: f769f2bf1666bcb479e8d2544d2aaeaf, type: 3}
       propertyPath: m_TagString
       value: Lantern
       objectReference: {fileID: 0}
@@ -143,7 +147,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0.8339988, b: 0.4009434, a: 1}
   m_Intensity: 4
-  m_Range: 1.3681011
+  m_Range: 1.3300092
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10

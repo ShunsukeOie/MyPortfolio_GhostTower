@@ -13,6 +13,8 @@ public class Player_Manager : MonoBehaviour
     // ランタンを灯す処理をまとめたスクリプト
     private Player_lantern m_lanternComp;
 
+    private Player_Vision m_visionComp;
+
     // スタート位置格納用
     private Vector3 m_startPos;
 
@@ -22,6 +24,7 @@ public class Player_Manager : MonoBehaviour
         m_moveComp = GetComponent<Player_Move>();
         m_lightComp = GetComponent<Player_Light>();
         m_lanternComp = GetComponent<Player_lantern>();
+        m_visionComp = GetComponent<Player_Vision>();
 
         // スタート位置を格納する
         m_startPos = transform.position;
@@ -29,13 +32,15 @@ public class Player_Manager : MonoBehaviour
 
     void Update()
     {
+        // 移動、回転処理
         m_moveComp.PlayerMove();
         m_moveComp.PlayerRotate();
 
         //目の前にランタンがあるかをチェック
         m_lanternComp.LanternCheck();
 
-
+        // 敵が視界内にいるかチェック
+        m_visionComp.DetectEemiesInView();
 
         if (Input.GetButtonDown("LightUp"))
         {
@@ -54,13 +59,13 @@ public class Player_Manager : MonoBehaviour
                 transform.position = m_startPos;
 
                 // やられ音を流す
-                AudioManager.instance.PlayerDeadSE();
+                AudioManager.Instance.PlayerDeadSE();
                 break;
 
             // タグがItemの場合
             case "Item":
                 // アイテムゲットの音を流す
-                AudioManager.instance.ItemGetSE();
+                AudioManager.Instance.ItemGetSE();
 
                 // バッテリーを回復する
                 m_lightComp.HealBattery();

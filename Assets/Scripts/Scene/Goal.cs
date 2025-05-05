@@ -5,14 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class Goal : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        // タグがプレイヤー以外なら終了
-        if (collision.gameObject.tag != "Player") { return; }
+        // タグがプレイヤーなら処理する
+        if (other.gameObject.tag == "Player") 
+        {
+            SceneController.CurrentSceneName();
 
-        SceneController.CurrentSceneName();
-
-        // どのシーンをクリアしたかを伝える
-        SceneController.StageClaer();
+            // どのシーンをクリアしたかを伝える
+            SceneController.StageClaer();
+        }
     }
 }

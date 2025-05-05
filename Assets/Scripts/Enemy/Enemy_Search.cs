@@ -22,7 +22,6 @@ public class Enemy_Search : MonoBehaviour
     // ナビゲーションのコンポーネントを格納する変数
     private NavMeshAgent m_agent;
 
-    // Enemy.csのStartの前に処理する
     void Awake()
     {
         // プレイヤーを取得
