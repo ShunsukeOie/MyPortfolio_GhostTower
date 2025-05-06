@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SEManeger : MonoBehaviour
+public class SEManager : MonoBehaviour
 {
     // AudioSource格納用
     private AudioSource _audioSourceSE;
@@ -12,7 +12,7 @@ public class SEManeger : MonoBehaviour
     private AudioClip _se;
 
     // シングルトン
-    public static SEManeger Instance
+    public static SEManager Instance
     {
         get; private set;
     }

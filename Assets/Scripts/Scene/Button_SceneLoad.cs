@@ -6,7 +6,7 @@ public class SceneLoadButton : MonoBehaviour
     public void RoadScene(string _sSceneName = null)
     {
         // SEManeger‚ðŽæ“¾
-        SEManeger seManeger = SEManeger.Instance;
+        SEManager seManeger = SEManager.Instance;
         // SEManeger‚©‚ç‰¹‚ð—¬‚·
         seManeger.SettingPlaySE();
 
