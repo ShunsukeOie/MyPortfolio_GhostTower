@@ -18,7 +18,7 @@ public class Player_Vision : MonoBehaviour
     private LayerMask m_wallLayer;
 
     // エネミーのスクリプト取得用変数
-    private List<Enemy> m_enemyList = new List<Enemy>();
+    private List<EnemyManager> m_enemyList = new List<EnemyManager>();
 
     // 視界内にいる敵を検出する関数
     public void DetectEemiesInView()
@@ -45,7 +45,7 @@ public class Player_Vision : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToEnemy, distanceToEnemy, m_wallLayer))
                 {
                     // 敵のスクリプト取得
-                    Enemy enemy = enemyTransform.GetComponent<Enemy>();
+                    EnemyManager enemy = enemyTransform.GetComponent<EnemyManager>();
                     // まだリストに含まれていないならば処理（重複しないように）
                     if (enemy != null)
                     {
@@ -58,7 +58,7 @@ public class Player_Vision : MonoBehaviour
     }
 
     // エネミーのリストを返す関数
-    public List<Enemy> GetEnemies()
+    public List<EnemyManager> GetEnemies()
     {
         return m_enemyList;
     }

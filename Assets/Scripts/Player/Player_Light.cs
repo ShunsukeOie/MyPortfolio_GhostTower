@@ -129,7 +129,7 @@ public class Player_Light : MonoBehaviour
         if (Input.GetButtonDown("Flash") && m_isLighting && m_flashCoolTimer <= 0.0f && m_currentBattery > 0)
         {
             // フラッシュ判定用オブジェクトから敵リストを取得
-            List<Enemy> targets = m_flashJudgeComp.GetEnemies();
+            List<EnemyManager> targets = m_flashJudgeComp.GetEnemies();
 
             foreach (var enemy in targets)
             {
