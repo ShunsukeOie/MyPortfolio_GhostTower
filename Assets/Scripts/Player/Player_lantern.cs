@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_lantern : MonoBehaviour
+public class Player_Lantern : MonoBehaviour
 {
     // –Ú‚Ì‘O‚É‚ ‚éƒ‰ƒ“ƒ^ƒ“‚ğŠi”[‚·‚éˆ×‚Ì•Ï”
     private GameObject m_lanternObj = null;

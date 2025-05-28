@@ -11,7 +11,7 @@ public class Player_Manager : MonoBehaviour
     private Player_Light m_lightComp;
 
     // ランタンを灯す処理をまとめたスクリプト
-    private Player_lantern m_lanternComp;
+    private Player_Lantern m_lanternComp;
 
     private Player_Vision m_visionComp;
 
@@ -23,7 +23,7 @@ public class Player_Manager : MonoBehaviour
         // コンポーネントを取得
         m_moveComp = GetComponent<Player_Move>();
         m_lightComp = GetComponent<Player_Light>();
-        m_lanternComp = GetComponent<Player_lantern>();
+        m_lanternComp = GetComponent<Player_Lantern>();
         m_visionComp = GetComponent<Player_Vision>();
 
         // スタート位置を格納する
