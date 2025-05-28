@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class Enemy_Manager : MonoBehaviour
 {
     private Enemy_Search m_searchComp;
     private Enemy_Light m_lightComp;

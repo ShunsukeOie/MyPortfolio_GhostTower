@@ -17,7 +17,7 @@ public class IlluminationEnemy : MonoBehaviour
             for (int i = 0; i < enemy.Length; ++i)
             {
                 // エネミーのスクリプトにアクセスしフラグを上げる
-                enemy[i].GetComponent<EnemyManager>().TriggerFlash();
+                enemy[i].GetComponent<Enemy_Manager>().TriggerFlash();
             }
             // アイテムゲットの音を流す
             AudioManager.Instance.ItemGetSE();

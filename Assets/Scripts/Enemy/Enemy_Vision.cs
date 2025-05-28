@@ -18,7 +18,7 @@ public class Enemy_Vision : MonoBehaviour
     private LayerMask m_wallLayer;
 
     // エネミーコンポーネント
-    private EnemyManager m_enemyComp;
+    private Enemy_Manager m_enemyComp;
 
     // プレイヤーが見えているか判定するフラグ
     private bool m_isPlayerVisible = false;
@@ -26,7 +26,7 @@ public class Enemy_Vision : MonoBehaviour
     void Awake()
     {
         // コンポーネントを取得
-        m_enemyComp = GetComponent<EnemyManager>();
+        m_enemyComp = GetComponent<Enemy_Manager>();
     }
 
     // 視界内にいるプレイヤーを検出する関数
