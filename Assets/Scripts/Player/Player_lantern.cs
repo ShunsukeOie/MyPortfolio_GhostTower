@@ -63,22 +63,25 @@ public class Player_Lantern : MonoBehaviour
     // ランタンを点灯させる関数
     public void LightUp()
     {
-        // ランタンオブジェがnullじゃなかったら処理する
-        if (m_lanternObj != null)
+        if (Input.GetButtonDown("LightUp"))
         {
-            // ランタンオブジェの子オブジェクトを取得する
-            GameObject candle = m_lanternObj.transform.Find("candle_").gameObject;
-            // 点滅をやめる
-            candle.GetComponent<FlickeringLight>().enabled = false;
-            // 光の範囲を6に固定する
-            candle.GetComponent<Light>().range = 6;
-            // ランタンオブジェクトが反応しないようレイヤーを変えておく
-            m_lanternObj.layer = LayerMask.NameToLayer("Ignore Raycast");
-            // UIを非表示にする
-            m_UIImage.SetActive(false);
+            // ランタンオブジェがnullじゃなかったら処理する
+            if (m_lanternObj != null)
+            {
+                // ランタンオブジェの子オブジェクトを取得する
+                GameObject candle = m_lanternObj.transform.Find("candle_").gameObject;
+                // 点滅をやめる
+                candle.GetComponent<FlickeringLight>().enabled = false;
+                // 光の範囲を6に固定する
+                candle.GetComponent<Light>().range = 6;
+                // ランタンオブジェクトが反応しないようレイヤーを変えておく
+                m_lanternObj.layer = LayerMask.NameToLayer("Ignore Raycast");
+                // UIを非表示にする
+                m_UIImage.SetActive(false);
 
-            // ランタン点灯の音を流す
-            AudioManager.Instance.LanthanumSE();
+                // ランタン点灯の音を流す
+                AudioManager.Instance.LanthanumSE();
+            }
         }
     }
 }

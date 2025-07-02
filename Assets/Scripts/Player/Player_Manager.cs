@@ -36,17 +36,27 @@ public class Player_Manager : MonoBehaviour
         m_moveComp.PlayerMove();
         m_moveComp.PlayerRotate();
 
+        // ライトの更新処理
+        // バッテリーの残量を更新
+        m_lightComp.UpdateBattery();
+
+        // ライトを点灯する
+        m_lightComp.LightUp();
+
+        // フラッシュ使用時の処理
+        m_lightComp.Flash();
+
+        // バッテリーの残量でゲージの色を変更する
+        m_lightComp.UpdateGaugeColor();
+
         //目の前にランタンがあるかをチェック
         m_lanternComp.LanternCheck();
 
         // 敵が視界内にいるかチェック
         m_visionComp.DetectEemiesInView();
 
-        if (Input.GetButtonDown("LightUp"))
-        {
-            // 光を灯す
-            m_lanternComp.LightUp();
-        }
+        // ランタンの光を灯す
+        m_lanternComp.LightUp();
     }
 
     private void OnTriggerEnter(Collider other)

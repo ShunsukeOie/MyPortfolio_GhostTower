@@ -70,26 +70,8 @@ public class Player_Light : MonoBehaviour
         m_gaugeController.UpdateGauge(m_currentBattery, MAX_BATTERY);
     }
 
-    void Update()
-    {
-        // バッテリーの残量を更新
-        UpdateBattery();
-
-        // ライトを点灯する
-        LightUp();
-
-        // バッテリーの残量が10以上ならフラッシュ出来る
-        if (m_currentBattery >= FLASH_BATTERY_COST)
-        {
-            Flash();
-        }
-
-        // バッテリーの残量でゲージの色を変更する
-        UpdateGaugeColor();
-    }
-
     // ライトを点灯させる関数
-    void LightUp()
+    public void LightUp()
     {
         if (m_currentBattery <= 0f) return;
 
@@ -117,51 +99,55 @@ public class Player_Light : MonoBehaviour
     }
 
     // フラッシュ用関数
-    void Flash()
+    public void Flash()
     {
-        // 入力制限用
-        if (m_flashCoolTimer >= 0f)
+        // バッテリーの残量が10以上ならフラッシュ出来る
+        if (m_currentBattery >= FLASH_BATTERY_COST)
         {
-            m_flashCoolTimer -= Time.deltaTime;
-        }
-
-        // ボタンが押されたかつライトが付いているかつタイマーが0以下かつバッテリーがある場合処理する
-        if (Input.GetButtonDown("Flash") && m_isLighting && m_flashCoolTimer <= 0.0f && m_currentBattery > 0)
-        {
-            // フラッシュ判定用オブジェクトから敵リストを取得
-            List<Enemy_Manager> targets = m_flashJudgeComp.GetEnemies();
-
-            foreach (var enemy in targets)
+            // 入力制限用
+            if (m_flashCoolTimer >= 0f)
             {
-                // スタンを付与
-                enemy.SetStan(true);
+                m_flashCoolTimer -= Time.deltaTime;
             }
 
-            // 光量を上げる
-            m_lightComp.intensity = 100f;
-
-            // もし複数回コルーチンが呼ばれることがあったら古いコルーチンを止める
-            if(m_coroutine != null)
+            // ボタンが押されたかつライトが付いているかつタイマーが0以下かつバッテリーがある場合処理する
+            if (Input.GetButtonDown("Flash") && m_isLighting && m_flashCoolTimer <= 0.0f && m_currentBattery > 0)
             {
-                StopCoroutine(m_coroutine);
+                // フラッシュ判定用オブジェクトから敵リストを取得
+                List<Enemy_Manager> targets = m_flashJudgeComp.GetEnemies();
+
+                foreach (var enemy in targets)
+                {
+                    // スタンを付与
+                    enemy.SetStan(true);
+                }
+
+                // 光量を上げる
+                m_lightComp.intensity = 100f;
+
+                // もし複数回コルーチンが呼ばれることがあったら古いコルーチンを止める
+                if (m_coroutine != null)
+                {
+                    StopCoroutine(m_coroutine);
+                }
+
+                // 光量を下げていくコルーチンスタート
+                m_coroutine = StartCoroutine(DecreaseLightIntensity());
+
+                // タイマーをリセットする
+                m_flashCoolTimer = m_useFlashInterval;
+
+                //バッテリーを減少させる
+                BatteryFlash();
+
+                // フラッシュの音を鳴らす
+                AudioManager.Instance.FlashSE();
             }
-
-            // 光量を下げていくコルーチンスタート
-            m_coroutine = StartCoroutine(DecreaseLightIntensity());
-
-            // タイマーをリセットする
-            m_flashCoolTimer = m_useFlashInterval;
-
-            //バッテリーを減少させる
-            BatteryFlash();
-
-            // フラッシュの音を鳴らす
-            AudioManager.Instance.FlashSE();
         }
     }
 
     // バッテリーの残量でゲージの色を変更する関数
-    void UpdateGaugeColor()
+    public void UpdateGaugeColor()
     {
         if (m_currentBattery >= 50f)
         {
@@ -202,7 +188,7 @@ public class Player_Light : MonoBehaviour
         m_coroutine = null;
     }
 
-    void UpdateBattery()
+    public void UpdateBattery()
     {
         if (m_currentBattery > 0 && m_isLighting)
         {
